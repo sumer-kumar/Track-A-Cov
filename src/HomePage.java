@@ -72,31 +72,38 @@ public class HomePage extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblHome.setBackground(new java.awt.Color(33, 32, 54));
         lblHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblDate.setForeground(new java.awt.Color(220, 248, 252));
         lblDate.setText("Date/Time");
         lblHome.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 30));
 
+        jPanel1.setBackground(new java.awt.Color(33, 32, 54));
         jPanel1.setLayout(new java.awt.GridLayout());
 
+        jLabel1.setBackground(new java.awt.Color(33, 32, 54));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TOTAL");
         jPanel1.add(jLabel1);
 
+        jLabel2.setBackground(new java.awt.Color(33, 32, 54));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ACTIVE");
         jPanel1.add(jLabel2);
 
+        jLabel3.setBackground(new java.awt.Color(33, 32, 54));
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 204, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("RECOVERED");
         jPanel1.add(jLabel3);
 
+        jLabel4.setBackground(new java.awt.Color(33, 32, 54));
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -106,47 +113,47 @@ public class HomePage extends javax.swing.JFrame {
         lblHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 730, 70));
 
         lblCountry.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblCountry.setForeground(new java.awt.Color(220, 248, 252));
         lblCountry.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCountry.setText("INDIA");
         lblHome.add(lblCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 150, 50));
 
+        lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
         lblLastRefreshed.setText("Last Refreshed");
         lblHome.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 140, 30));
 
-        getContentPane().add(lblHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 130));
+        getContentPane().add(lblHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 140));
 
+        jPanel2.setBackground(new java.awt.Color(33, 32, 54));
         jPanel2.setLayout(new java.awt.GridLayout());
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 0, 0));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotal.setText("0");
-        lblTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel2.add(lblTotal);
 
         lblActive.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblActive.setForeground(new java.awt.Color(51, 51, 255));
         lblActive.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblActive.setText("0");
-        lblActive.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel2.add(lblActive);
 
         lblRecovered.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblRecovered.setForeground(new java.awt.Color(0, 204, 51));
         lblRecovered.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRecovered.setText("0");
-        lblRecovered.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel2.add(lblRecovered);
 
         lblDeaths.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblDeaths.setForeground(new java.awt.Color(153, 153, 153));
         lblDeaths.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDeaths.setText("0");
-        lblDeaths.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel2.add(lblDeaths);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 141, 730, 40));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 131, 730, 50));
 
+        jPanel3.setBackground(new java.awt.Color(33, 32, 54));
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jButton1.setBackground(new java.awt.Color(0, 204, 204));
@@ -176,7 +183,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 730, 180));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 730, 190));
 
         pack();
         setLocationRelativeTo(null);
