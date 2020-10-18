@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author RAJKUMAR PRASAD
+ * 
  */
 public class HomePage extends javax.swing.JFrame {
    private StateWise stateWiseObj;
