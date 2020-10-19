@@ -22,6 +22,7 @@ public class HomePage extends javax.swing.JFrame {
    private DataFetch dataFetch;
    private LocalDateTime dateTime;
    private String formatDateTime; 
+   StateWiseJframe swjf ;  //state wise jframe
    public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
@@ -40,6 +41,7 @@ public class HomePage extends javax.swing.JFrame {
        dataFetch.fetchData();
        displayIndiaData();
        this.setVisible(true);
+       swjf = new StateWiseJframe(dataFetch);
     }
   
  
@@ -65,7 +67,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnRefresh = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnStateWiseTable = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -178,15 +180,15 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton2.setText("State Wise ");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnStateWiseTable.setText("State Wise ");
+        btnStateWiseTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnStateWiseTableActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton2);
+        jPanel4.add(btnStateWiseTable);
 
         jButton3.setText("Covid Analyzer");
         jPanel4.add(jButton3);
@@ -237,10 +239,9 @@ public class HomePage extends javax.swing.JFrame {
        displayIndiaData();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-                    StateWiseJframe swjf = new StateWiseJframe();
+    private void btnStateWiseTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStateWiseTableActionPerformed
                     swjf.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnStateWiseTableActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
             jPanel3.grabFocus();        // TODO add your handling code here:
@@ -282,8 +283,8 @@ public class HomePage extends javax.swing.JFrame {
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnStateWiseTable;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
