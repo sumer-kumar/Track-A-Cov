@@ -260,6 +260,12 @@ public class HomePage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblStateWise.getTableHeader().setReorderingAllowed(false);
+        tblStateWise.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblStateWiseMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblStateWise);
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 530, 350));
@@ -317,6 +323,10 @@ public class HomePage extends javax.swing.JFrame {
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
         tblStateWise.clearSelection();
     }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void tblStateWiseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStateWiseMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblStateWiseMouseClicked
         
     public void time(){
         
