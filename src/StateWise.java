@@ -1,6 +1,3 @@
-
-
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class StateWise{
@@ -71,7 +68,7 @@ public class StateWise{
  class Data{
     public Summary summary;
     public List <UnofficialSummary> unofficial_summary;
-    public List<Regional> regional;
+    public List <Regional> regional;
 
      public Data(Summary summary, List<UnofficialSummary> unofficial_summary, List<Regional> regional) {
          this.summary = summary;

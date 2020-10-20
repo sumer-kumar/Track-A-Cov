@@ -16,31 +16,39 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * 
- */
+
 public class HomePage extends javax.swing.JFrame {
-   private StateWise stateWiseObj;
+   private DataFetch dataFetch;
    private LocalDateTime dateTime;
    private String formatDateTime; 
+   private DefaultTableModel model;
+
    public HomePage() {
         initComponents();
+        dataFetch = new DataFetch();
         time();
-        refresh();
        try {
-           fetchData();
-       } catch (IOException ex) {
-           ex.getStackTrace();
+           dataFetch.refresh();
+           lblLastRefreshed.setText(formatDateTime );
+           lblLastUpdated.setText("Last Updated:");
+        
+       } catch (Exception ex) {
+           this.setVisible(true);
+        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
+                +"Connect to Internet to See Latest Data");
+        System.out.println("ünsuccessful");
        }
-               this.setVisible(true);
+       dataFetch.fetchData();
+       displayIndiaData();
+       this.setVisible(true);
+       
+       model = (DefaultTableModel)tblStateWise.getModel();
+       showInTable();
     }
   
  
@@ -56,14 +64,23 @@ public class HomePage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblCountry = new javax.swing.JLabel();
-        lblLastRefreshed = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTotal = new javax.swing.JLabel();
         lblActive = new javax.swing.JLabel();
         lblRecovered = new javax.swing.JLabel();
         lblDeaths = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        btnRefresh = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        lblLastUpdated = new javax.swing.JLabel();
+        lblLastRefreshed = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblStateWise = new javax.swing.JTable();
+        tfSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Track A Cov");
@@ -80,52 +97,49 @@ public class HomePage extends javax.swing.JFrame {
         lblHome.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 30));
 
         jPanel1.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TOTAL");
         jPanel1.add(jLabel1);
 
         jLabel2.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ACTIVE");
         jPanel1.add(jLabel2);
 
         jLabel3.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 204, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("RECOVERED");
         jPanel1.add(jLabel3);
 
         jLabel4.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("DEATHS");
         jPanel1.add(jLabel4);
 
-        lblHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 730, 70));
+        lblHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 360, 70));
 
         lblCountry.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblCountry.setForeground(new java.awt.Color(220, 248, 252));
         lblCountry.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCountry.setText("INDIA");
-        lblHome.add(lblCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 150, 50));
+        lblHome.add(lblCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 150, 50));
 
-        lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
-        lblLastRefreshed.setText("Last Refreshed");
-        lblHome.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 140, 30));
-
-        getContentPane().add(lblHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 140));
+        getContentPane().add(lblHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 140));
+        lblHome.getAccessibleContext().setAccessibleParent(lblHome);
 
         jPanel2.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 0, 0));
@@ -151,54 +165,169 @@ public class HomePage extends javax.swing.JFrame {
         lblDeaths.setText("0");
         jPanel2.add(lblDeaths);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 131, 730, 50));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 131, 370, 50));
 
         jPanel3.setBackground(new java.awt.Color(33, 32, 54));
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jButton1.setBackground(new java.awt.Color(0, 204, 204));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("Refresh");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
             }
         });
+
+        btnRefresh.setBackground(new java.awt.Color(0, 204, 204));
+        btnRefresh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
+
+        jButton3.setText("Covid Analyzer");
+        jPanel4.add(jButton3);
+
+        jButton1.setText("Important Links");
+        jPanel4.add(jButton1);
+
+        jButton4.setText("News");
+        jPanel4.add(jButton4);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(303, 303, 303)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addGap(135, 135, 135)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnRefresh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 730, 190));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 270));
+
+        jPanel5.setBackground(new java.awt.Color(33, 32, 54));
+        jPanel5.setForeground(new java.awt.Color(33, 32, 54));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
+        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 90, 30));
+        lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
+
+        lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
+        jPanel5.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 140, 30));
+        lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
+
+        tblStateWise.setAutoCreateRowSorter(true);
+        tblStateWise.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Region", "Total ", "Active", "Recovered", "Deaths"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblStateWise.getTableHeader().setReorderingAllowed(false);
+        tblStateWise.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblStateWiseMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblStateWise);
+
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 530, 350));
+
+        tfSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfSearchActionPerformed(evt);
+            }
+        });
+        tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfSearchKeyReleased(evt);
+            }
+        });
+        jPanel5.add(tfSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 220, -1));
+
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 530, 450));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        time();
-        refresh();
-       try {
-           fetchData();
-       } catch (IOException ex) {
-           Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        try {
+           dataFetch.refresh();
+            lblLastRefreshed.setText(formatDateTime );
+            lblLastUpdated.setText("Last Updated:");
+       } catch (Exception ex) {
+           this.setVisible(true);
+        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
+                +"Connect to Internet to See Latest Data");
        }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+       dataFetch.fetchData();
+       displayIndiaData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+            jPanel3.grabFocus();
+            tblStateWise.clearSelection();
+              
+    }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void tfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfSearchActionPerformed
+
+    private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
+        String search = tfSearch.getText().toUpperCase();
+        TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
+        tblStateWise.setRowSorter(ts);
+        ts.setRowFilter(RowFilter.regexFilter(search));
+    }//GEN-LAST:event_tfSearchKeyReleased
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        tblStateWise.clearSelection();
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void tblStateWiseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStateWiseMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblStateWiseMouseClicked
         
     public void time(){
         
@@ -222,51 +351,44 @@ public class HomePage extends javax.swing.JFrame {
         };
         t.start();
     }
-    public void refresh(){
-        try {
-            URL url = new URL("https://api.rootnet.in/covid19-in/stats/latest");
-            URLConnection urlCon = url.openConnection();
-            InputStream is = urlCon.getInputStream();
-            int i;
-            String s="";
-            while((i = is.read())!=-1){
-                s = s+(char)i;
-            }
-            File offlineStateWise = new File("offlineStateWise.txt");
-            BufferedWriter bfwriter = new BufferedWriter(new FileWriter(offlineStateWise));
-            bfwriter.write(s);
-            bfwriter.flush();
-            bfwriter.close();
-            lblLastRefreshed.setText(formatDateTime );
-        }catch(Exception e){
-           e.getStackTrace();
-           this.setVisible(true);
-        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
-                +"Connect to Internet to See Latest Data");  
-        }
+    public void displayIndiaData(){
+        lblTotal.setText(""+dataFetch.getStateWise().data.summary.total);
         
-    }
-    public void fetchData() throws FileNotFoundException, IOException{
-        File offlineStateWise = new File("offlineStateWise.txt");
-        BufferedReader bfreader = new BufferedReader(new FileReader(offlineStateWise));
-        String s = "";
-        String endChecker;
-        while((endChecker = bfreader.readLine())!=null){
-            s+=endChecker;
+        lblActive.setText(""+(dataFetch.getStateWise().data.summary.total-dataFetch.getStateWise().data.summary.deaths
+                -dataFetch.getStateWise().data.summary.discharged));
+        
+        lblRecovered.setText(""+dataFetch.getStateWise().data.summary.discharged);
+        
+        lblDeaths.setText(""+dataFetch.getStateWise().data.summary.deaths);
+        
         }
-        bfreader.close();
-        Gson gson = new Gson();
-        stateWiseObj = gson.fromJson(s,StateWise.class);
-        lblTotal.setText(""+stateWiseObj.data.summary.total);
-        lblActive.setText(""+(stateWiseObj.data.summary.total-stateWiseObj.data.summary.deaths-stateWiseObj.data.summary.discharged));
-        lblRecovered.setText(""+stateWiseObj.data.summary.discharged);
-        lblDeaths.setText(""+stateWiseObj.data.summary.deaths);
+     public void showInTable(){
+       Object[] rowData = new Object[6];
+       
+       for(int i=0;i<dataFetch.getStateWise().data.regional.size();i++){
+          rowData[0] = dataFetch.getStateWise().data.regional.get(i).loc.toUpperCase();
+          rowData[1] = dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian;
+          
+          rowData[2]=    (dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian
+                         -dataFetch.getStateWise().data.regional.get(i).discharged
+                         -dataFetch.getStateWise().data.regional.get(i).deaths);
+          rowData[3] =  + dataFetch.getStateWise().data.regional.get(i).discharged;
+          rowData[4] =  +dataFetch.getStateWise().data.regional.get(i).deaths;
+
+          model.addRow(rowData);
+       }
+       tblStateWise.getColumnModel().getColumn(0).setPreferredWidth(100);
+       tblStateWise.getColumnModel().getColumn(1).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(2).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
     }
-    
-    
-    
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -274,14 +396,20 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCountry;
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblDeaths;
     private javax.swing.JPanel lblHome;
     private javax.swing.JLabel lblLastRefreshed;
+    private javax.swing.JLabel lblLastUpdated;
     private javax.swing.JLabel lblRecovered;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JTable tblStateWise;
+    private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
 
 
