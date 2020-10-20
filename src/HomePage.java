@@ -78,13 +78,24 @@ public class HomePage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        lblLastUpdated = new javax.swing.JLabel();
-        lblLastRefreshed = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
         tfSearch = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnDistrict = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        lblStateTC = new javax.swing.JLabel();
+        lblStateAC = new javax.swing.JLabel();
+        lblStateRC = new javax.swing.JLabel();
+        lblStateDC = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        lblStateT = new javax.swing.JLabel();
+        lblStateA = new javax.swing.JLabel();
+        lblStateR = new javax.swing.JLabel();
+        lblStateD = new javax.swing.JLabel();
+        lblState = new javax.swing.JLabel();
+        lblLastRefreshed = new javax.swing.JLabel();
+        lblLastUpdated = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Track A Cov");
@@ -96,6 +107,7 @@ public class HomePage extends javax.swing.JFrame {
         lblHome.setBackground(new java.awt.Color(33, 32, 54));
         lblHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblDate.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblDate.setForeground(new java.awt.Color(220, 248, 252));
         lblDate.setText("Date/Time");
         lblHome.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 30));
@@ -104,40 +116,44 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TOTAL");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel1);
 
         jLabel2.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ACTIVE");
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel2);
 
         jLabel3.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 204, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("RECOVERED");
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel3);
 
         jLabel4.setBackground(new java.awt.Color(33, 32, 54));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("DEATHS");
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel4);
 
-        lblHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 360, 70));
+        lblHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 370, 40));
 
-        lblCountry.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblCountry.setFont(new java.awt.Font("Tahoma", 1, 45)); // NOI18N
         lblCountry.setForeground(new java.awt.Color(220, 248, 252));
         lblCountry.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCountry.setText("INDIA");
-        lblHome.add(lblCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 150, 50));
+        lblHome.add(lblCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 180, 80));
 
         getContentPane().add(lblHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 140));
         lblHome.getAccessibleContext().setAccessibleParent(lblHome);
@@ -145,25 +161,25 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(33, 32, 54));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
-        lblTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTotal.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 0, 0));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotal.setText("0");
         jPanel2.add(lblTotal);
 
-        lblActive.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblActive.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblActive.setForeground(new java.awt.Color(51, 51, 255));
         lblActive.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblActive.setText("0");
         jPanel2.add(lblActive);
 
-        lblRecovered.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblRecovered.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblRecovered.setForeground(new java.awt.Color(0, 204, 51));
         lblRecovered.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRecovered.setText("0");
         jPanel2.add(lblRecovered);
 
-        lblDeaths.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblDeaths.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblDeaths.setForeground(new java.awt.Color(153, 153, 153));
         lblDeaths.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDeaths.setText("0");
@@ -178,6 +194,7 @@ public class HomePage extends javax.swing.JFrame {
                 jPanel3MouseClicked(evt);
             }
         });
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnRefresh.setBackground(new java.awt.Color(0, 204, 204));
         btnRefresh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -188,6 +205,7 @@ public class HomePage extends javax.swing.JFrame {
                 btnRefreshActionPerformed(evt);
             }
         });
+        jPanel3.add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 104, -1));
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -200,27 +218,7 @@ public class HomePage extends javax.swing.JFrame {
         jButton4.setText("News");
         jPanel4.add(jButton4);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 9, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnRefresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 361, 79));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 270));
 
@@ -232,14 +230,6 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
-        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 90, 30));
-        lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
-
-        lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
-        jPanel5.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 140, 30));
-        lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
 
         tblStateWise.setAutoCreateRowSorter(true);
         tblStateWise.setModel(new javax.swing.table.DefaultTableModel(
@@ -271,9 +261,17 @@ public class HomePage extends javax.swing.JFrame {
                 tblStateWiseMouseClicked(evt);
             }
         });
+        tblStateWise.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblStateWiseKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblStateWiseKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblStateWise);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 530, 350));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 530, 230));
 
         tfSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,12 +283,12 @@ public class HomePage extends javax.swing.JFrame {
                 tfSearchKeyReleased(evt);
             }
         });
-        jPanel5.add(tfSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 220, -1));
+        jPanel5.add(tfSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 220, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(220, 248, 252));
         jLabel5.setText("Search");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 60, 20));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 60, 20));
 
         btnDistrict.setText("District");
         btnDistrict.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +296,77 @@ public class HomePage extends javax.swing.JFrame {
                 btnDistrictActionPerformed(evt);
             }
         });
-        jPanel5.add(btnDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
+        jPanel5.add(btnDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, -1, -1));
+
+        jPanel6.setBackground(new java.awt.Color(33, 32, 54));
+        jPanel6.setLayout(new java.awt.GridLayout());
+
+        lblStateTC.setForeground(new java.awt.Color(255, 0, 51));
+        lblStateTC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateTC.setText(" ");
+        jPanel6.add(lblStateTC);
+
+        lblStateAC.setForeground(new java.awt.Color(51, 153, 255));
+        lblStateAC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateAC.setText(" ");
+        jPanel6.add(lblStateAC);
+
+        lblStateRC.setForeground(new java.awt.Color(51, 255, 51));
+        lblStateRC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateRC.setText(" ");
+        jPanel6.add(lblStateRC);
+
+        lblStateDC.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateDC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateDC.setText(" ");
+        jPanel6.add(lblStateDC);
+
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 350, 30));
+
+        jPanel7.setBackground(new java.awt.Color(33, 32, 54));
+        jPanel7.setLayout(new java.awt.GridLayout());
+
+        lblStateT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblStateT.setForeground(new java.awt.Color(255, 0, 51));
+        lblStateT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel7.add(lblStateT);
+
+        lblStateA.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblStateA.setForeground(new java.awt.Color(51, 153, 255));
+        lblStateA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateA.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel7.add(lblStateA);
+
+        lblStateR.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblStateR.setForeground(new java.awt.Color(51, 255, 51));
+        lblStateR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateR.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel7.add(lblStateR);
+
+        lblStateD.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblStateD.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStateD.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel7.add(lblStateD);
+
+        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 350, 30));
+
+        lblState.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblState.setForeground(new java.awt.Color(220, 248, 252));
+        lblState.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblState.setText(" ");
+        jPanel5.add(lblState, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 310, 40));
+
+        lblLastRefreshed.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
+        jPanel5.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 140, 30));
+        lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
+
+        lblLastUpdated.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
+        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 90, 30));
+        lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 530, 450));
 
@@ -344,16 +412,31 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void tblStateWiseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStateWiseMouseClicked
-        // TODO add your handling code here:
+        showLabels();
     }//GEN-LAST:event_tblStateWiseMouseClicked
 
     private void btnDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistrictActionPerformed
-    
+     if(df.getRepeate()){}
+        else if(tblStateWise.getSelectedRow()!=-1){
         df.setState((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
-        df.setVisible(true);    
         df.showInTable();
+        df.setVisible(true);    
+        
+        }
+    else
+    {
+        JOptionPane.showMessageDialog(this, "Please Select a row");
+    }
         
     }//GEN-LAST:event_btnDistrictActionPerformed
+
+    private void tblStateWiseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblStateWiseKeyPressed
+        showLabels();
+    }//GEN-LAST:event_tblStateWiseKeyPressed
+
+    private void tblStateWiseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblStateWiseKeyReleased
+showLabels();        // TODO add your handling code here:
+    }//GEN-LAST:event_tblStateWiseKeyReleased
         
     public void time(){
         
@@ -398,8 +481,8 @@ public class HomePage extends javax.swing.JFrame {
           rowData[2]=    (dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian
                          -dataFetch.getStateWise().data.regional.get(i).discharged
                          -dataFetch.getStateWise().data.regional.get(i).deaths);
-          rowData[3] =  + dataFetch.getStateWise().data.regional.get(i).discharged;
-          rowData[4] =  +dataFetch.getStateWise().data.regional.get(i).deaths;
+          rowData[3] =   dataFetch.getStateWise().data.regional.get(i).discharged;
+          rowData[4] =  dataFetch.getStateWise().data.regional.get(i).deaths;
 
           model.addRow(rowData);
        }
@@ -409,7 +492,19 @@ public class HomePage extends javax.swing.JFrame {
        tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
        tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
     }
-        
+    public void showLabels(){
+lblState.setText((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
+lblStateTC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),1));
+lblStateAC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),2));
+lblStateRC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),3));
+lblStateDC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),4));
+lblStateA.setText("Active");
+lblStateT.setText("Total");
+lblStateR.setText("Recovered");
+lblStateD.setText("Deaths");
+
+    }
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDistrict;
     private javax.swing.JButton btnRefresh;
@@ -426,6 +521,8 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCountry;
@@ -435,6 +532,15 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel lblLastRefreshed;
     private javax.swing.JLabel lblLastUpdated;
     private javax.swing.JLabel lblRecovered;
+    private javax.swing.JLabel lblState;
+    private javax.swing.JLabel lblStateA;
+    private javax.swing.JLabel lblStateAC;
+    private javax.swing.JLabel lblStateD;
+    private javax.swing.JLabel lblStateDC;
+    private javax.swing.JLabel lblStateR;
+    private javax.swing.JLabel lblStateRC;
+    private javax.swing.JLabel lblStateT;
+    private javax.swing.JLabel lblStateTC;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblStateWise;
     private javax.swing.JTextField tfSearch;
