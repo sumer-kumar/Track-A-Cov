@@ -12,10 +12,10 @@
     "unofficial-summary": [
       {
         "source": "covid19india.org",
-        "total": 7596667,
-        "recovered": 6730617,
-        "deaths": 115252,
-        "active": 749537
+        "total": 7645046,
+        "recovered": 6784958,
+        "deaths": 115888,
+        "active": 742939
       }
     ],
     "regional": [
@@ -309,6 +309,6 @@
       }
     ]
   },
-  "lastRefreshed": "2020-10-20T09:18:23.684Z",
+  "lastRefreshed": "2020-10-20T16:06:25.929Z",
   "lastOriginUpdate": "2020-10-20T02:30:00.000Z"
 }

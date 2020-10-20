@@ -17,12 +17,16 @@ import javax.swing.JOptionPane;
 
 public class DataFetch {
 private StateWise stateWiseObj;
+private DistrictWise [] districtWiseObj;
+
+    public DistrictWise[] getDistrictWiseObj() {
+        return districtWiseObj;
+    }
     
     public StateWise getStateWise() {
         return stateWiseObj;
     }
     public void refresh() throws Exception{
-//        try {
             URL url = new URL("https://api.rootnet.in/covid19-in/stats/latest");
             URLConnection urlCon = url.openConnection();
             InputStream is = urlCon.getInputStream();
@@ -37,14 +41,14 @@ private StateWise stateWiseObj;
             bfwriter.write(s);
             bfwriter.flush();
             bfwriter.close();
-            
-//            lblLastRefreshed.setText(formatDateTime );
-//            lblLastUpdated.setText("Last Updated:");
-//        }catch(Exception e){
-//           e.getStackTrace();
-//           this.setVisible(true);
-//        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
-//                +"Connect to Internet to See Latest Data");  
+          try {
+//                   refreshDistrict();     
+                   fetchDataDistrict();
+            } catch (Exception ex) {
+                       System.out.println(ex.getMessage());
+             }
+                   
+          
         }
      public void fetchData() {
         File offlineStateWise = new File("offlineStateWise.txt");
@@ -60,15 +64,47 @@ private StateWise stateWiseObj;
         bfreader.close();
         Gson gson = new Gson();
         stateWiseObj = gson.fromJson(s,StateWise.class);
-//        lblTotal.setText(""+stateWiseObj.data.summary.total);
-//        lblActive.setText(""+(stateWiseObj.data.summary.total-stateWiseObj.data.summary.deaths-stateWiseObj.data.summary.discharged));
-//        lblRecovered.setText(""+stateWiseObj.data.summary.discharged);
-//        lblDeaths.setText(""+stateWiseObj.data.summary.deaths);
     }catch(Exception e){
         e.getStackTrace();
     }
+   
      }    
-        
+        public void refreshDistrict() throws Exception{
+            URL url = new URL("https://api.covid19india.org/v2/state_district_wise.json");
+            URLConnection urlCon = url.openConnection();
+            InputStream is = urlCon.getInputStream();
+            int i;
+            String s="";
+            while((i = is.read())!=-1){
+                s = s+(char)i;
+            }
+            is.close();
+            File offlineStateWise = new File("offlineDistrictWise.txt");
+            BufferedWriter bfwriter = new BufferedWriter(new FileWriter(offlineStateWise));
+            bfwriter.write(s);
+            bfwriter.flush();
+            bfwriter.close();
+  
+        }
+        public void fetchDataDistrict() {
+        File offlineStateWise = new File("offlineDistrictWise.txt");
+        BufferedReader bfreader;
+    try {
+        bfreader = new BufferedReader(new FileReader(offlineStateWise));
+   
+        String s = "";
+        String endChecker;
+        while((endChecker = bfreader.readLine())!=null){
+            s+=endChecker;
+        }
+        bfreader.close();
+        Gson gson = new Gson();
+        System.out.println();
+        districtWiseObj = gson.fromJson(s,DistrictWise[].class);
+    }catch(Exception e){
+        e.getStackTrace();
+    }
+     }
     }
 
 

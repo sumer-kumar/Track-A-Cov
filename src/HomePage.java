@@ -26,6 +26,7 @@ public class HomePage extends javax.swing.JFrame {
    private DataFetch dataFetch;
    private LocalDateTime dateTime;
    private String formatDateTime; 
+   private DistrictJframe df;
    private DefaultTableModel model;
 
    public HomePage() {
@@ -49,6 +50,7 @@ public class HomePage extends javax.swing.JFrame {
        
        model = (DefaultTableModel)tblStateWise.getModel();
        showInTable();
+       df = new DistrictJframe(dataFetch);
     }
   
  
@@ -81,6 +83,8 @@ public class HomePage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
         tfSearch = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnDistrict = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Track A Cov");
@@ -273,7 +277,7 @@ public class HomePage extends javax.swing.JFrame {
 
         tfSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfSearchActionPerformed(evt);
+                none(evt);
             }
         });
         tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -282,6 +286,19 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
         jPanel5.add(tfSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 220, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(220, 248, 252));
+        jLabel5.setText("Search");
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 60, 20));
+
+        btnDistrict.setText("District");
+        btnDistrict.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDistrictActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 530, 450));
 
@@ -310,15 +327,16 @@ public class HomePage extends javax.swing.JFrame {
               
     }//GEN-LAST:event_jPanel3MouseClicked
 
-    private void tfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSearchActionPerformed
+    private void none(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_none
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfSearchActionPerformed
+    }//GEN-LAST:event_none
 
     private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
         String search = tfSearch.getText().toUpperCase();
         TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
         tblStateWise.setRowSorter(ts);
         ts.setRowFilter(RowFilter.regexFilter(search));
+        
     }//GEN-LAST:event_tfSearchKeyReleased
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
@@ -328,6 +346,14 @@ public class HomePage extends javax.swing.JFrame {
     private void tblStateWiseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStateWiseMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblStateWiseMouseClicked
+
+    private void btnDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistrictActionPerformed
+    
+        df.setState((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
+        df.setVisible(true);    
+        df.showInTable();
+        
+    }//GEN-LAST:event_btnDistrictActionPerformed
         
     public void time(){
         
@@ -385,6 +411,7 @@ public class HomePage extends javax.swing.JFrame {
     }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDistrict;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
@@ -393,6 +420,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
