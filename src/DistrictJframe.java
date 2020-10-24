@@ -57,6 +57,8 @@ public class DistrictJframe extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(33, 32, 54));
 
         tblDistrict.setAutoCreateRowSorter(true);
+        tblDistrict.setBackground(new java.awt.Color(33, 32, 54));
+        tblDistrict.setForeground(new java.awt.Color(220, 248, 252));
         tblDistrict.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -103,7 +105,7 @@ public class DistrictJframe extends javax.swing.JFrame {
         jPanel1.add(lblState, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 580, 40));
 
         jPanel2.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(204, 0, 0));
@@ -128,7 +130,7 @@ public class DistrictJframe extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 590, 30));
 
         jPanel3.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTotalCount.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         lblTotalCount.setForeground(new java.awt.Color(204, 0, 0));
@@ -174,6 +176,16 @@ public class DistrictJframe extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
           repeate = false;    
           model.setRowCount(0);
+           lblTotal.setText("");
+   lblRecovered.setText("");
+   lblActive.setText("");
+   lblDeaths.setText("");
+   lblState.setText("");
+   lblTotalCount.setText("");
+   lblActiveCount.setText("");
+   lblRecoveredCount.setText("");
+  lblDeathsCount.setText("");
+          
     }//GEN-LAST:event_formWindowClosing
 
     private void tblDistrictMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDistrictMouseClicked

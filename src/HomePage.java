@@ -28,7 +28,7 @@ public class HomePage extends javax.swing.JFrame {
    private String formatDateTime; 
    private DistrictJframe df;
    private DefaultTableModel model;
-
+   private NewsJframe newsJframe;
    public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
@@ -42,7 +42,6 @@ public class HomePage extends javax.swing.JFrame {
            this.setVisible(true);
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
-        System.out.println("ünsuccessful");
        }
        dataFetch.fetchData();
        displayIndiaData();
@@ -51,6 +50,7 @@ public class HomePage extends javax.swing.JFrame {
        model = (DefaultTableModel)tblStateWise.getModel();
        showInTable();
        df = new DistrictJframe(dataFetch);
+       newsJframe = new NewsJframe();
     }
   
  
@@ -216,6 +216,11 @@ public class HomePage extends javax.swing.JFrame {
         jPanel4.add(jButton1);
 
         jButton4.setText("News");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton4);
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 361, 79));
@@ -232,6 +237,8 @@ public class HomePage extends javax.swing.JFrame {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblStateWise.setAutoCreateRowSorter(true);
+        tblStateWise.setBackground(new java.awt.Color(33, 32, 54));
+        tblStateWise.setForeground(new java.awt.Color(220, 248, 252));
         tblStateWise.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -299,7 +306,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel5.add(btnDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         lblStateTC.setForeground(new java.awt.Color(255, 0, 51));
         lblStateTC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -324,7 +331,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 350, 30));
 
         jPanel7.setBackground(new java.awt.Color(33, 32, 54));
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         lblStateT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblStateT.setForeground(new java.awt.Color(255, 0, 51));
@@ -417,7 +424,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void btnDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistrictActionPerformed
      if(df.getRepeate()){}
-        else if(tblStateWise.getSelectedRow()!=-1){
+     else if(tblStateWise.getSelectedRow()!=-1){
         df.setState((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
         df.showInTable();
         df.setVisible(true);    
@@ -435,8 +442,14 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_tblStateWiseKeyPressed
 
     private void tblStateWiseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblStateWiseKeyReleased
-showLabels();        // TODO add your handling code here:
+     showLabels();        // TODO add your handling code here:
     }//GEN-LAST:event_tblStateWiseKeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+     if(!newsJframe.getRepeate()){
+         newsJframe.setVisible(true);
+     }
+    }//GEN-LAST:event_jButton4ActionPerformed
         
     public void time(){
         

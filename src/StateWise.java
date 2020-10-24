@@ -17,14 +17,6 @@ public class StateWise{
 
 }
 
- class UnofficialSummary{
-    public String source;
-    public int total;
-    public int recovered;
-    public int deaths;
-    public int active;
-
- }
 
  class Regional{
     public String loc;
@@ -38,9 +30,8 @@ public class StateWise{
 
  class Data{
     public Summary summary;
-    public List <UnofficialSummary> unofficial_summary;
     public List <Regional> regional;
-
+    
  }
 
 
