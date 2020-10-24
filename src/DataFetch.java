@@ -42,8 +42,7 @@ private DistrictWise [] districtWiseObj;
             bfwriter.flush();
             bfwriter.close();
           try {
-//                   refreshDistrict();     
-                   fetchDataDistrict();
+//                   refreshDistrict();
             } catch (Exception ex) {
                        System.out.println(ex.getMessage());
              }
@@ -67,6 +66,7 @@ private DistrictWise [] districtWiseObj;
     }catch(Exception e){
         e.getStackTrace();
     }
+    fetchDataDistrict();
    
      }    
         public void refreshDistrict() throws Exception{

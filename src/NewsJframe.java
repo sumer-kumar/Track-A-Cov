@@ -18,15 +18,17 @@ public class NewsJframe extends javax.swing.JFrame {
     private File dir;
     private boolean repeate;
     public NewsJframe() {
+       this.repeate = false;
        initComponents();
-       fetch();
+       try{
+           fetch();
        showLabels(0);
        currIndex = 0;
        size = news.getSize()-1;
        dir = new File("news");
        dir.mkdir();
        pnlHeader.grabFocus();
-       this.repeate = false;
+       }catch(Exception e){}
     }
     public boolean getRepeate(){return this.repeate;}
     public void fetch(){
@@ -259,7 +261,7 @@ public class NewsJframe extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-       prev();
+        prev();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnOpenbrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenbrowserActionPerformed

@@ -29,17 +29,26 @@ public class HomePage extends javax.swing.JFrame {
    private DistrictJframe df;
    private DefaultTableModel model;
    private NewsJframe newsJframe;
+   private boolean internet;
    public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
         time();
+        new Thread(){
+            public void run(){
+            btnNews.setEnabled(false);
+            newsJframe = new NewsJframe();
+            btnNews.setEnabled(true);    
+            }
+        }.start();
        try {
            dataFetch.refresh();
            lblLastRefreshed.setText(formatDateTime );
            lblLastUpdated.setText("Last Updated:");
-        
+           internet = true;
        } catch (Exception ex) {
            this.setVisible(true);
+           internet = false;
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
        }
@@ -50,8 +59,9 @@ public class HomePage extends javax.swing.JFrame {
        model = (DefaultTableModel)tblStateWise.getModel();
        showInTable();
        df = new DistrictJframe(dataFetch);
-       newsJframe = new NewsJframe();
-    }
+       
+       
+   }
   
  
     @SuppressWarnings("unchecked")
@@ -76,7 +86,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnNews = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
@@ -215,13 +225,13 @@ public class HomePage extends javax.swing.JFrame {
         jButton1.setText("Important Links");
         jPanel4.add(jButton1);
 
-        jButton4.setText("News");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnNews.setText("News");
+        btnNews.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnNewsActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton4);
+        jPanel4.add(btnNews);
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 361, 79));
 
@@ -445,11 +455,14 @@ public class HomePage extends javax.swing.JFrame {
      showLabels();        // TODO add your handling code here:
     }//GEN-LAST:event_tblStateWiseKeyReleased
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-     if(!newsJframe.getRepeate()){
+    private void btnNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewsActionPerformed
+     if(internet){
+        if(!newsJframe.getRepeate()){
          newsJframe.setVisible(true);
-     }
-    }//GEN-LAST:event_jButton4ActionPerformed
+     }}
+     else
+         JOptionPane.showMessageDialog(this,"No Internet Connection");
+    }//GEN-LAST:event_btnNewsActionPerformed
         
     public void time(){
         
@@ -520,10 +533,10 @@ lblStateD.setText("Deaths");
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDistrict;
+    private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
