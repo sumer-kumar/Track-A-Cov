@@ -17,6 +17,19 @@ public class NewsJframe extends javax.swing.JFrame {
     private int size;
     private File dir;
     private boolean repeate;
+    private String currUrl;
+    public NewsJframe(Saved saved){
+        initComponents();
+        taTitle.setText(saved.getTitle());
+        taDescription.setText(saved.getDescription());
+        taBody.setText(saved.getBody());
+        lblSource.setText(saved.getSource());
+        currUrl = saved.getUrl();
+        btnNext.setVisible(false);
+        btnPrev.setVisible(false);
+        btnSave.setVisible(false);
+        
+    }
     public NewsJframe() {
        this.repeate = false;
        initComponents();
@@ -56,6 +69,7 @@ public class NewsJframe extends javax.swing.JFrame {
         taDescription.setText(news.getValue(i).getDescription());
         taBody.setText(news.getValue(i).getBody());
         lblSource.setText(news.getValue(i).getProvider().getName());
+        currUrl = news.getValue(i).getUrl();
     }
     public void next(){
         if(currIndex!=size&&(currIndex>=0&&currIndex<=size)){
@@ -121,7 +135,7 @@ public class NewsJframe extends javax.swing.JFrame {
         pnlHeader = new javax.swing.JPanel();
         btnNext = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("News");
@@ -229,13 +243,13 @@ public class NewsJframe extends javax.swing.JFrame {
         });
         pnlHeader.add(btnPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
 
-        jButton1.setText("Save ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSave.setText("Save ");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
-        pnlHeader.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 70, -1));
+        pnlHeader.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 70, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,12 +279,12 @@ public class NewsJframe extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnOpenbrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenbrowserActionPerformed
-         openBrowser(news.getValue(currIndex).getUrl());
+        openBrowser(currUrl);
     }//GEN-LAST:event_btnOpenbrowserActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveNews();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        repeate = true;        // TODO add your handling code here:
@@ -284,7 +298,7 @@ public class NewsJframe extends javax.swing.JFrame {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnOpenbrowser;
     private javax.swing.JButton btnPrev;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

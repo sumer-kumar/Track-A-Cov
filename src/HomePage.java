@@ -30,6 +30,7 @@ public class HomePage extends javax.swing.JFrame {
    private DefaultTableModel model;
    private NewsJframe newsJframe;
    private boolean internet;
+   private Bookmark bookmark;
    public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
@@ -41,6 +42,7 @@ public class HomePage extends javax.swing.JFrame {
             btnNews.setEnabled(true);    
             }
         }.start();
+        bookmark = new Bookmark();
        try {
            dataFetch.refresh();
            lblLastRefreshed.setText(formatDateTime );
@@ -84,9 +86,13 @@ public class HomePage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnRefresh = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAnakyser = new javax.swing.JButton();
+        btnLinks = new javax.swing.JButton();
         btnNews = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        bntBookmark = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
@@ -219,11 +225,11 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton3.setText("Covid Analyzer");
-        jPanel4.add(jButton3);
+        btnAnakyser.setText("Covid Analyzer");
+        jPanel4.add(btnAnakyser);
 
-        jButton1.setText("Important Links");
-        jPanel4.add(jButton1);
+        btnLinks.setText("Important Links");
+        jPanel4.add(btnLinks);
 
         btnNews.setText("News");
         btnNews.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +239,25 @@ public class HomePage extends javax.swing.JFrame {
         });
         jPanel4.add(btnNews);
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 361, 79));
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 219, 370, 40));
+
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
+
+        jButton2.setText("Helpline ");
+        jPanel8.add(jButton2);
+
+        bntBookmark.setText("Bookmarked News");
+        bntBookmark.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntBookmarkActionPerformed(evt);
+            }
+        });
+        jPanel8.add(bntBookmark);
+
+        jButton5.setText("Graphs");
+        jPanel8.add(jButton5);
+
+        jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 40));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 270));
 
@@ -463,13 +487,18 @@ public class HomePage extends javax.swing.JFrame {
      else
          JOptionPane.showMessageDialog(this,"No Internet Connection");
     }//GEN-LAST:event_btnNewsActionPerformed
+
+    private void bntBookmarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBookmarkActionPerformed
+    bookmark.setVisible(true);
+    bookmark.showInTable();
+    }//GEN-LAST:event_bntBookmarkActionPerformed
         
     public void time(){
         
         Thread t = new Thread(){
             public void run(){
                 String am_pm;
-               int hr ;
+                int hr ;
                 while(true)
                 { 
                     dateTime = LocalDateTime.now(); 
@@ -532,11 +561,14 @@ lblStateD.setText("Deaths");
     }
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntBookmark;
+    private javax.swing.JButton btnAnakyser;
     private javax.swing.JButton btnDistrict;
+    private javax.swing.JButton btnLinks;
     private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -549,6 +581,7 @@ lblStateD.setText("Deaths");
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCountry;
