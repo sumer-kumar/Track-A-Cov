@@ -44,6 +44,18 @@ public class HomePage extends javax.swing.JFrame {
         }.start();
         bookmark = new Bookmark();
        try {
+           new Thread(){
+               public void run(){
+                   btnDistrict.setEnabled(false);
+                   try {
+                       dataFetch.refreshDistrict();                       
+                   } catch (Exception ex) {
+                       System.out.println(ex.getMessage());
+                   }
+                   dataFetch.fetchDataDistrict();                                                      
+                  btnDistrict.setEnabled(true);
+               }
+           }.start();
            dataFetch.refresh();
            lblLastRefreshed.setText(formatDateTime );
            lblLastUpdated.setText("Last Updated:");
@@ -416,12 +428,25 @@ public class HomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        try {
+      try {
+            new Thread(){
+               public void run(){
+                   btnDistrict.setEnabled(false);
+                   try {
+                    dataFetch.refreshDistrict();
+                    dataFetch.fetchDataDistrict();
+                   } catch (Exception ex) {
+                       System.out.println(ex.getMessage());
+                   }
+                  btnDistrict.setEnabled(true);
+               }
+           }.start();
            dataFetch.refresh();
-            lblLastRefreshed.setText(formatDateTime );
-            lblLastUpdated.setText("Last Updated:");
+           lblLastRefreshed.setText(formatDateTime );
+           lblLastUpdated.setText("Last Updated:");
+           
        } catch (Exception ex) {
-           this.setVisible(true);
+        this.setVisible(true);
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
        }

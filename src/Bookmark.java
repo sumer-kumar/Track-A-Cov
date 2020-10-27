@@ -47,7 +47,7 @@ public class Bookmark extends javax.swing.JFrame {
         if(tblList.getSelectedRow()!=-1){
             try {
         BufferedReader bw = new BufferedReader(
-                new FileReader(
+                  new FileReader(
                         new File(dir,tblList.getValueAt(tblList.getSelectedRow(), 0).toString()+".txt")));
         String s = "";
         String line;
@@ -96,6 +96,9 @@ public class Bookmark extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bookmarked News");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -191,6 +194,10 @@ public class Bookmark extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       model.setRowCount(0);
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;

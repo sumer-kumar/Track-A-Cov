@@ -93,8 +93,9 @@ public class NewsJframe extends javax.swing.JFrame {
     }
     public void saveNews(){
         String s ="";
-        File f = new File(dir,news.getValue(currIndex).getTitle()+".txt");
-        try{if(f.createNewFile()){
+        File f = new File(dir,news.getValue(currIndex).getTitle().replaceAll(":","")+".txt");
+        try{
+           if(!f.exists()){
            Saved save = new Saved (news.getValue(currIndex).getTitle(),
                                    news.getValue(currIndex).getDescription(),
                                    news.getValue(currIndex).getBody(),

@@ -1,4 +1,5 @@
 
+import History.History; //History Class imported
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,8 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,15 +23,15 @@ import javax.swing.JOptionPane;
 public class DataFetch {
 private StateWise stateWiseObj;
 private DistrictWise [] districtWiseObj;
+private History history;
 
     public DistrictWise[] getDistrictWiseObj() {
         return districtWiseObj;
     }
-    
     public StateWise getStateWise() {
         return stateWiseObj;
     }
-    public void refresh() throws Exception{
+        public void refresh() throws Exception{
             URL url = new URL("https://api.rootnet.in/covid19-in/stats/latest");
             URLConnection urlCon = url.openConnection();
             InputStream is = urlCon.getInputStream();
@@ -41,15 +46,15 @@ private DistrictWise [] districtWiseObj;
             bfwriter.write(s);
             bfwriter.flush();
             bfwriter.close();
-          try {
-//                   refreshDistrict();
-            } catch (Exception ex) {
-                       System.out.println(ex.getMessage());
-             }
+//          try {
+////                   refreshDistrict();
+//            } catch (Exception ex) {
+//                       System.out.println(ex.getMessage());
+//             }
                    
           
         }
-     public void fetchData() {
+        public void fetchData() {
         File offlineStateWise = new File("offlineStateWise.txt");
         BufferedReader bfreader;
     try {
@@ -65,9 +70,7 @@ private DistrictWise [] districtWiseObj;
         stateWiseObj = gson.fromJson(s,StateWise.class);
     }catch(Exception e){
         e.getStackTrace();
-    }
-    fetchDataDistrict();
-   
+    }   
      }    
         public void refreshDistrict() throws Exception{
             URL url = new URL("https://api.covid19india.org/v2/state_district_wise.json");
@@ -105,6 +108,38 @@ private DistrictWise [] districtWiseObj;
         e.getStackTrace();
     }
      }
+        public void refreshHistory()throws Exception{
+            var url = "https://api.rootnet.in/covid19-in/stats/history";
+            var request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
+            var client = HttpClient.newBuilder().build();
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String s = response.body();
+            File offlineStateWise = new File("history.txt");
+            BufferedWriter bfwriter = new BufferedWriter(new FileWriter(offlineStateWise));
+            bfwriter.write(s);
+            bfwriter.flush();
+            bfwriter.close();
+//            Gson gson = new Gson();
+//            History h = gson.fromJson(s, History.class);
+
+        }
+        public void fetchHistory(){
+        File offlineStateWise = new File("history.txt");
+        BufferedReader bfreader;
+        try {
+        bfreader = new BufferedReader(new FileReader(offlineStateWise));
+        String s = "";
+        String endChecker;
+        while((endChecker = bfreader.readLine())!=null){
+            s+=endChecker;
+        }
+       bfreader.close();
+       Gson gson = new Gson();
+       history = gson.fromJson(s, History.class);
+        }catch(Exception e){
+        e.getStackTrace();
+    }
+        }
     }
 
 
