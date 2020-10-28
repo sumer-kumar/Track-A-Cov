@@ -11,14 +11,8 @@ public class Main {
     static DistrictWise districtWiseObj;
     public static void main(String[] args) throws Exception {
         HomePage h = new HomePage();
-        var url = "https://api.rootnet.in/covid19-in/stats/history";
-            var request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
-            var client = HttpClient.newBuilder().build();
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String s = response.body();
-            Gson gson = new Gson();
-            History history = gson.fromJson(s, History.class);
-        }
+            
+    }
 
     }
      

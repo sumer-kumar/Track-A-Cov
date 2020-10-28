@@ -1,20 +1,6 @@
 
-import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.time.LocalDateTime;
-import static java.time.LocalDateTime.now;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -31,11 +17,24 @@ public class HomePage extends javax.swing.JFrame {
    private NewsJframe newsJframe;
    private boolean internet;
    private Bookmark bookmark;
-   public HomePage() {
+   private GraphJframe graph;
+   
+    public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
         time();
         new Thread(){
+            public void run(){
+               btnGraph.setEnabled(false);
+               try{
+               dataFetch.refreshHistory();
+               }catch(Exception e){System.out.println(e.getMessage());}
+               dataFetch.fetchHistory();
+               graph = new GraphJframe(dataFetch);
+               btnGraph.setEnabled(true);
+            }
+        }.start();
+            new Thread(){
             public void run(){
             btnNews.setEnabled(false);
             newsJframe = new NewsJframe();
@@ -76,7 +75,72 @@ public class HomePage extends javax.swing.JFrame {
        
        
    }
-  
+    public void time(){
+        
+        Thread t = new Thread(){
+            public void run(){
+                String am_pm;
+                int hr ;
+                while(true)
+                { 
+                    dateTime = LocalDateTime.now(); 
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");  
+                    formatDateTime = dateTime.format(format);
+                    lblDate.setText(formatDateTime);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                    }
+                } 
+            }
+        };
+        t.start();
+    }
+    public void displayIndiaData(){
+        lblTotal.setText(""+dataFetch.getStateWise().data.summary.total);
+        
+        lblActive.setText(""+(dataFetch.getStateWise().data.summary.total-dataFetch.getStateWise().data.summary.deaths
+                -dataFetch.getStateWise().data.summary.discharged));
+        
+        lblRecovered.setText(""+dataFetch.getStateWise().data.summary.discharged);
+        
+        lblDeaths.setText(""+dataFetch.getStateWise().data.summary.deaths);
+        
+        }
+    public void showInTable(){
+       Object[] rowData = new Object[6];
+       
+       for(int i=0;i<dataFetch.getStateWise().data.regional.size();i++){
+          rowData[0] = dataFetch.getStateWise().data.regional.get(i).loc.toUpperCase();
+          rowData[1] = dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian;
+          
+          rowData[2]=    (dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian
+                         -dataFetch.getStateWise().data.regional.get(i).discharged
+                         -dataFetch.getStateWise().data.regional.get(i).deaths);
+          rowData[3] =   dataFetch.getStateWise().data.regional.get(i).discharged;
+          rowData[4] =  dataFetch.getStateWise().data.regional.get(i).deaths;
+
+          model.addRow(rowData);
+       }
+       tblStateWise.getColumnModel().getColumn(0).setPreferredWidth(100);
+       tblStateWise.getColumnModel().getColumn(1).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(2).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
+    }
+    public void showLabels(){
+lblState.setText((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
+lblStateTC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),1));
+lblStateAC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),2));
+lblStateRC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),3));
+lblStateDC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),4));
+lblStateA.setText("Active");
+lblStateT.setText("Total");
+lblStateR.setText("Recovered");
+lblStateD.setText("Deaths");
+
+    }  
  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -104,7 +168,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         bntBookmark = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnGraph = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
@@ -258,6 +322,7 @@ public class HomePage extends javax.swing.JFrame {
         jButton2.setText("Helpline ");
         jPanel8.add(jButton2);
 
+        bntBookmark.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bntBookmark.setText("Bookmarked News");
         bntBookmark.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,8 +331,13 @@ public class HomePage extends javax.swing.JFrame {
         });
         jPanel8.add(bntBookmark);
 
-        jButton5.setText("Graphs");
-        jPanel8.add(jButton5);
+        btnGraph.setText("Graphs");
+        btnGraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraphActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnGraph);
 
         jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 40));
 
@@ -515,85 +585,27 @@ public class HomePage extends javax.swing.JFrame {
 
     private void bntBookmarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBookmarkActionPerformed
     bookmark.setVisible(true);
+        if(!bookmark.getRepeate()) {
     bookmark.showInTable();
+   }
+   
     }//GEN-LAST:event_bntBookmarkActionPerformed
-        
-    public void time(){
-        
-        Thread t = new Thread(){
-            public void run(){
-                String am_pm;
-                int hr ;
-                while(true)
-                { 
-                    dateTime = LocalDateTime.now(); 
-                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");  
-                    formatDateTime = dateTime.format(format);
-                    lblDate.setText(formatDateTime);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                        e.getStackTrace();
-                    }
-                } 
-            }
-        };
-        t.start();
-    }
-    public void displayIndiaData(){
-        lblTotal.setText(""+dataFetch.getStateWise().data.summary.total);
-        
-        lblActive.setText(""+(dataFetch.getStateWise().data.summary.total-dataFetch.getStateWise().data.summary.deaths
-                -dataFetch.getStateWise().data.summary.discharged));
-        
-        lblRecovered.setText(""+dataFetch.getStateWise().data.summary.discharged);
-        
-        lblDeaths.setText(""+dataFetch.getStateWise().data.summary.deaths);
-        
-        }
-     public void showInTable(){
-       Object[] rowData = new Object[6];
-       
-       for(int i=0;i<dataFetch.getStateWise().data.regional.size();i++){
-          rowData[0] = dataFetch.getStateWise().data.regional.get(i).loc.toUpperCase();
-          rowData[1] = dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian;
-          
-          rowData[2]=    (dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian
-                         -dataFetch.getStateWise().data.regional.get(i).discharged
-                         -dataFetch.getStateWise().data.regional.get(i).deaths);
-          rowData[3] =   dataFetch.getStateWise().data.regional.get(i).discharged;
-          rowData[4] =  dataFetch.getStateWise().data.regional.get(i).deaths;
 
-          model.addRow(rowData);
-       }
-       tblStateWise.getColumnModel().getColumn(0).setPreferredWidth(100);
-       tblStateWise.getColumnModel().getColumn(1).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(2).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
-    }
-    public void showLabels(){
-lblState.setText((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
-lblStateTC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),1));
-lblStateAC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),2));
-lblStateRC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),3));
-lblStateDC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),4));
-lblStateA.setText("Active");
-lblStateT.setText("Total");
-lblStateR.setText("Recovered");
-lblStateD.setText("Deaths");
+    private void btnGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraphActionPerformed
+        graph.setVisible(true);
+    }//GEN-LAST:event_btnGraphActionPerformed
+        
 
-    }
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntBookmark;
     private javax.swing.JButton btnAnakyser;
     private javax.swing.JButton btnDistrict;
+    private javax.swing.JButton btnGraph;
     private javax.swing.JButton btnLinks;
     private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
