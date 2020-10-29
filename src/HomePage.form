@@ -327,10 +327,13 @@
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnHelpline">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Helpline "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHelplineActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bntBookmark">
               <Properties>

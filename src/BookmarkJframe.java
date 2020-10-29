@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
 
 
 
-public class Bookmark extends javax.swing.JFrame {
+public class BookmarkJframe extends javax.swing.JFrame {
     private boolean repeate;
     private DefaultTableModel model;
     private List <File>list;
     private File dir;
-    public Bookmark() {
+    public BookmarkJframe() {
         repeate = false;
         initComponents();
         dir = new File("news");
@@ -98,8 +98,12 @@ public class Bookmark extends javax.swing.JFrame {
             }
         });
 
+        pnlHome.setBackground(new java.awt.Color(33, 32, 54));
+
         jScrollPane1.setToolTipText("");
 
+        tblList.setBackground(new java.awt.Color(33, 32, 54));
+        tblList.setForeground(new java.awt.Color(220, 248, 252));
         tblList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

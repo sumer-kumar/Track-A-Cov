@@ -16,7 +16,7 @@ public class HomePage extends javax.swing.JFrame {
    private DefaultTableModel model;
    private NewsJframe newsJframe;
    private boolean internet;
-   private Bookmark bookmark;
+   private BookmarkJframe bookmark;
    private GraphJframe graph;
    
     public HomePage() {
@@ -24,6 +24,20 @@ public class HomePage extends javax.swing.JFrame {
         dataFetch = new DataFetch();
         time();
         new Thread(){
+            @Override
+            public void run(){
+                btnHelpline.setEnabled(false);
+                try{
+                    dataFetch.refreshContacts();
+                    dataFetch.refreshAdvisories();
+                }catch(Exception e){}
+                dataFetch.fetchContacts();
+                dataFetch.fetchAdvisories();
+                btnHelpline.setEnabled(true);
+            } 
+        }.start();
+        new Thread(){
+            @Override
             public void run(){
                btnGraph.setEnabled(false);
                try{
@@ -41,7 +55,7 @@ public class HomePage extends javax.swing.JFrame {
             btnNews.setEnabled(true);    
             }
         }.start();
-        bookmark = new Bookmark();
+        bookmark = new BookmarkJframe();
        try {
            new Thread(){
                public void run(){
@@ -166,7 +180,7 @@ lblStateD.setText("Deaths");
         btnLinks = new javax.swing.JButton();
         btnNews = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnHelpline = new javax.swing.JButton();
         bntBookmark = new javax.swing.JButton();
         btnGraph = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -319,8 +333,13 @@ lblStateD.setText("Deaths");
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton2.setText("Helpline ");
-        jPanel8.add(jButton2);
+        btnHelpline.setText("Helpline ");
+        btnHelpline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHelplineActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnHelpline);
 
         bntBookmark.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bntBookmark.setText("Bookmarked News");
@@ -594,6 +613,10 @@ lblStateD.setText("Deaths");
     private void btnGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraphActionPerformed
         graph.setVisible(true);
     }//GEN-LAST:event_btnGraphActionPerformed
+
+    private void btnHelplineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelplineActionPerformed
+       new HelplineJframe(dataFetch).setVisible(true);
+    }//GEN-LAST:event_btnHelplineActionPerformed
         
 
      
@@ -602,10 +625,10 @@ lblStateD.setText("Deaths");
     private javax.swing.JButton btnAnakyser;
     private javax.swing.JButton btnDistrict;
     private javax.swing.JButton btnGraph;
+    private javax.swing.JButton btnHelpline;
     private javax.swing.JButton btnLinks;
     private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
