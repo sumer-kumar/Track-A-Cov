@@ -1,3 +1,4 @@
+import Advisories.Advisories;
 import History.History; //History Class imported
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public class DataFetch {
 private StateWise stateWiseObj;
 private DistrictWise [] districtWiseObj;
 private History history;
+private Advisories advisories;
+private ContactDetails contactDetails;
 
     public History getHistory() {
         return history;
