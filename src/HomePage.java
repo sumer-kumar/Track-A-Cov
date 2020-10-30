@@ -18,6 +18,9 @@ public class HomePage extends javax.swing.JFrame {
    private boolean internet;
    private BookmarkJframe bookmark;
    private GraphJframe graph;
+   private Analyser analyser;
+   private LinksJframe links;
+   private HelplineJframe helpline;
    
     public HomePage() {
         initComponents();
@@ -33,6 +36,7 @@ public class HomePage extends javax.swing.JFrame {
                 }catch(Exception e){}
                 dataFetch.fetchContacts();
                 dataFetch.fetchAdvisories();
+                helpline = new HelplineJframe(dataFetch);
                 btnHelpline.setEnabled(true);
             } 
         }.start();
@@ -46,6 +50,18 @@ public class HomePage extends javax.swing.JFrame {
                dataFetch.fetchHistory();
                graph = new GraphJframe(dataFetch);
                btnGraph.setEnabled(true);
+            }
+        }.start();
+        new Thread(){
+            @Override
+            public void run(){
+                btnAnalyser.setEnabled(false);
+                btnLinks.setEnabled(false);
+                
+                analyser = new Analyser();
+                links = new LinksJframe();
+                btnAnalyser.setEnabled(true);
+                btnLinks.setEnabled(true);
             }
         }.start();
             new Thread(){
@@ -177,7 +193,7 @@ lblStateD.setText("Deaths");
         jPanel3 = new javax.swing.JPanel();
         btnRefresh = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        btnAnakyser = new javax.swing.JButton();
+        btnAnalyser = new javax.swing.JButton();
         btnLinks = new javax.swing.JButton();
         btnNews = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
@@ -223,7 +239,7 @@ lblStateD.setText("Deaths");
 
         jLabel1.setBackground(new java.awt.Color(33, 32, 54));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TOTAL");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -247,7 +263,7 @@ lblStateD.setText("Deaths");
 
         jLabel4.setBackground(new java.awt.Color(33, 32, 54));
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("DEATHS");
         jLabel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -274,7 +290,7 @@ lblStateD.setText("Deaths");
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lblTotal.setForeground(new java.awt.Color(153, 153, 153));
+        lblTotal.setForeground(new java.awt.Color(255, 0, 0));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotal.setText("0");
         jPanel2.add(lblTotal);
@@ -292,7 +308,7 @@ lblStateD.setText("Deaths");
         jPanel2.add(lblRecovered);
 
         lblDeaths.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lblDeaths.setForeground(new java.awt.Color(255, 0, 0));
+        lblDeaths.setForeground(new java.awt.Color(153, 153, 153));
         lblDeaths.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDeaths.setText("0");
         jPanel2.add(lblDeaths);
@@ -321,13 +337,13 @@ lblStateD.setText("Deaths");
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        btnAnakyser.setText("Covid Analyzer");
-        btnAnakyser.addActionListener(new java.awt.event.ActionListener() {
+        btnAnalyser.setText("Covid Analyzer");
+        btnAnalyser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnakyserActionPerformed(evt);
+                btnAnalyserActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAnakyser);
+        jPanel4.add(btnAnalyser);
 
         btnLinks.setText("Important Links");
         btnLinks.addActionListener(new java.awt.event.ActionListener() {
@@ -357,6 +373,7 @@ lblStateD.setText("Deaths");
         });
         jPanel8.add(btnHelpline);
 
+        bntBookmark.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bntBookmark.setText("Bookmarked News");
         bntBookmark.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,7 +475,7 @@ lblStateD.setText("Deaths");
         jPanel6.setBackground(new java.awt.Color(33, 32, 54));
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
-        lblStateTC.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateTC.setForeground(new java.awt.Color(255, 0, 0));
         lblStateTC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateTC.setText(" ");
         jPanel6.add(lblStateTC);
@@ -473,7 +490,7 @@ lblStateD.setText("Deaths");
         lblStateRC.setText(" ");
         jPanel6.add(lblStateRC);
 
-        lblStateDC.setForeground(new java.awt.Color(255, 0, 0));
+        lblStateDC.setForeground(new java.awt.Color(153, 153, 153));
         lblStateDC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateDC.setText(" ");
         jPanel6.add(lblStateDC);
@@ -484,7 +501,7 @@ lblStateD.setText("Deaths");
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         lblStateT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblStateT.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateT.setForeground(new java.awt.Color(255, 0, 0));
         lblStateT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel7.add(lblStateT);
@@ -502,7 +519,7 @@ lblStateD.setText("Deaths");
         jPanel7.add(lblStateR);
 
         lblStateD.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblStateD.setForeground(new java.awt.Color(255, 0, 0));
+        lblStateD.setForeground(new java.awt.Color(153, 153, 153));
         lblStateD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateD.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel7.add(lblStateD);
@@ -520,7 +537,7 @@ lblStateD.setText("Deaths");
         lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
 
         lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
-        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 90, 30));
+        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 90, 30));
         lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 530, 450));
@@ -564,7 +581,7 @@ lblStateD.setText("Deaths");
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void none(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_none
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_none
 
     private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
@@ -628,27 +645,23 @@ lblStateD.setText("Deaths");
     }//GEN-LAST:event_btnGraphActionPerformed
 
     private void btnHelplineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelplineActionPerformed
-       new HelplineJframe(dataFetch).setVisible(true);
+       helpline.setVisible(true);
     }//GEN-LAST:event_btnHelplineActionPerformed
 
-    private void btnAnakyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnakyserActionPerformed
-        // TODO add your handling code here:Analyser a = new Analyser();
-       Analyser a = new Analyser();
-       a.setVisible(true);
     private void btnLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinksActionPerformed
-       LinksJframe lf = new LinksJframe();
-       lf.setVisible(true);
+      links.setVisible(true);
     }//GEN-LAST:event_btnLinksActionPerformed
 
-    private void btnAnakyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnakyserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnakyserActionPerformed
-        
+    private void btnAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyserActionPerformed
+      analyser.setVisible(true);
+    }//GEN-LAST:event_btnAnalyserActionPerformed
+
+       
 
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntBookmark;
-    private javax.swing.JButton btnAnakyser;
+    private javax.swing.JButton btnAnalyser;
     private javax.swing.JButton btnDistrict;
     private javax.swing.JButton btnGraph;
     private javax.swing.JButton btnHelpline;

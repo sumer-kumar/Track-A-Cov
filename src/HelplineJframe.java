@@ -118,6 +118,9 @@ rowData[1] = dataFetch.getContactDetails().getData().getContacts().getRegional()
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tblAdvisoriesKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblAdvisoriesKeyReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(tblAdvisories);
 
@@ -281,6 +284,13 @@ rowData[1] = dataFetch.getContactDetails().getData().getContacts().getRegional()
     private void tblContactsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblContactsKeyPressed
        tblAdvisories.clearSelection();
     }//GEN-LAST:event_tblContactsKeyPressed
+
+    private void tblAdvisoriesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblAdvisoriesKeyReleased
+        
+        currUrl = dataFetch.getAdvisories().getData().getNotifications().get(tblAdvisories.getSelectedRow()).getLink();
+        taAdvisories.setText(dataFetch.getAdvisories().getData().getNotifications().get(tblAdvisories.getSelectedRow()).getTitle());
+    
+    }//GEN-LAST:event_tblAdvisoriesKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFacebook;
