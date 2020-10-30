@@ -213,7 +213,6 @@ lblStateD.setText("Deaths");
         lblHome.setBackground(new java.awt.Color(33, 32, 54));
         lblHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblDate.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblDate.setForeground(new java.awt.Color(220, 248, 252));
         lblDate.setText("Date/Time");
         lblHome.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 30));
@@ -316,6 +315,11 @@ lblStateD.setText("Deaths");
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         btnAnakyser.setText("Covid Analyzer");
+        btnAnakyser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnakyserActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnAnakyser);
 
         btnLinks.setText("Important Links");
@@ -341,7 +345,6 @@ lblStateD.setText("Deaths");
         });
         jPanel8.add(btnHelpline);
 
-        bntBookmark.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bntBookmark.setText("Bookmarked News");
         bntBookmark.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -500,12 +503,10 @@ lblStateD.setText("Deaths");
         lblState.setText(" ");
         jPanel5.add(lblState, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 310, 40));
 
-        lblLastRefreshed.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
         jPanel5.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 140, 30));
         lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
 
-        lblLastUpdated.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
         jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 90, 30));
         lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
@@ -617,6 +618,12 @@ lblStateD.setText("Deaths");
     private void btnHelplineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelplineActionPerformed
        new HelplineJframe(dataFetch).setVisible(true);
     }//GEN-LAST:event_btnHelplineActionPerformed
+
+    private void btnAnakyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnakyserActionPerformed
+        // TODO add your handling code here:Analyser a = new Analyser();
+       Analyser a = new Analyser();
+       a.setVisible(true);
+    }//GEN-LAST:event_btnAnakyserActionPerformed
         
 
      
