@@ -305,6 +305,11 @@ lblStateD.setText("Deaths");
         jPanel4.add(btnAnakyser);
 
         btnLinks.setText("Important Links");
+        btnLinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinksActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnLinks);
 
         btnNews.setText("News");
@@ -594,6 +599,11 @@ lblStateD.setText("Deaths");
     private void btnGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraphActionPerformed
         graph.setVisible(true);
     }//GEN-LAST:event_btnGraphActionPerformed
+
+    private void btnLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinksActionPerformed
+       LinksJframe lf = new LinksJframe();
+       lf.setVisible(true);
+    }//GEN-LAST:event_btnLinksActionPerformed
         
 
      
