@@ -1,6 +1,0 @@
-DataFetch.Delta
-Delta
-DataFetch.DistrictData
-DistrictData
-DataFetch.DistrictWise
-DistrictWise

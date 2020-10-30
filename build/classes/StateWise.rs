@@ -1,9 +1,0 @@
-UnofficialSummary
-DataFetch.Data
-DataFetch.StateWise
-DataFetch.Summary
-Summary
-StateWise
-Data
-Regional
-DataFetch.Regional
