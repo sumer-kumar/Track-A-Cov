@@ -33,3 +33,16 @@ Specifically this application helps by displaying all the statistics of the COVI
 ### Helpline
 
 ![2020-10-31 (2)](https://user-images.githubusercontent.com/72625053/97775729-1f08b300-1b8b-11eb-8bf6-6e3d912a9bc2.png)
+
+### Covid Analyser
+
+![2020-10-31 (3)](https://user-images.githubusercontent.com/72625053/97776054-68f29880-1b8d-11eb-9049-9adf17385cfc.png)
+
+### Important Links
+
+![2020-10-31 (4)](https://user-images.githubusercontent.com/72625053/97776079-89baee00-1b8d-11eb-91c8-5a80d6654c54.png)
+
+### News
+
+![2020-10-31 (5)](https://user-images.githubusercontent.com/72625053/97776095-a1927200-1b8d-11eb-81bd-846c47b3beb5.png)
+
