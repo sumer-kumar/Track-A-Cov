@@ -1,7 +1,9 @@
 
 //import DataFetch.DataFetch;
 //import DataFetch.DistrictWise;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class DistrictJframe extends javax.swing.JFrame {
    private DefaultTableModel model;
@@ -40,6 +42,7 @@ public class DistrictJframe extends javax.swing.JFrame {
         lblActiveCount = new javax.swing.JLabel();
         lblRecoveredCount = new javax.swing.JLabel();
         lblDeathsCount = new javax.swing.JLabel();
+        tfSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("District");
@@ -100,7 +103,7 @@ public class DistrictJframe extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDistrict);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 123, 590, 260));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 163, 590, 220));
 
         lblState.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblState.setForeground(new java.awt.Color(220, 248, 252));
@@ -157,6 +160,13 @@ public class DistrictJframe extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 590, 30));
 
+        tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfSearchKeyReleased(evt);
+            }
+        });
+        jPanel1.add(tfSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 160, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,6 +212,13 @@ public class DistrictJframe extends javax.swing.JFrame {
     private void tblDistrictKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDistrictKeyPressed
 showLabels();        // TODO add your handling code here:
     }//GEN-LAST:event_tblDistrictKeyPressed
+
+    private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
+       String search = tfSearch.getText().toUpperCase();
+        TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
+        tblDistrict.setRowSorter(ts);
+        ts.setRowFilter(RowFilter.regexFilter(search));
+    }//GEN-LAST:event_tfSearchKeyReleased
   public void showInTable(){
       this.setTitle(state);
    Object [] rowData = new Object[5];
@@ -212,11 +229,11 @@ showLabels();        // TODO add your handling code here:
   }
   
   for(int j=0;j<dw[position].getDistrictData().size();j++){
-     rowData[0]= dw[position].districtData.get(j).district;
-     rowData[1]= dw[position].districtData.get(j).confirmed;
-     rowData[2]= dw[position].districtData.get(j).active;
-     rowData[3]= dw[position].districtData.get(j).recovered;
-     rowData[4]= dw[position].districtData.get(j).deceased;
+     rowData[0]= dw[position].getDistrictData().get(j).getDistrict().toUpperCase();
+     rowData[1]= dw[position].getDistrictData().get(j).getConfirmed();
+     rowData[2]= dw[position].getDistrictData().get(j).getActive();
+     rowData[3]= dw[position].getDistrictData().get(j).getRecovered();
+     rowData[4]= dw[position].getDistrictData().get(j).getDeceased();
      model.addRow(rowData);
   }
    }
@@ -247,5 +264,6 @@ showLabels();        // TODO add your handling code here:
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalCount;
     private javax.swing.JTable tblDistrict;
+    private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
 }

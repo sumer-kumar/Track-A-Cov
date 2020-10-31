@@ -3,24 +3,79 @@ import java.util.List;
 
 
 class Delta{
-    public int confirmed;
-    public int deceased;
-    public int recovered;
+    private int confirmed;
+    private int deceased;
+    private int recovered;
+
+    public int getConfirmed() {
+        return confirmed;
+    }
+
+    public int getDeceased() {
+        return deceased;
+    }
+
+    public int getRecovered() {
+        return recovered;
+    }
+    
 }
 
  class DistrictData{
-    public String district;
-    public String notes;
-    public int active;
-    public int confirmed;
-    public int deceased;
-    public int recovered;
-    public Delta delta;
-}
+    private String district;
+    private String notes;
+    private int active;
+    private int confirmed;
+    private int deceased;
+    private int recovered;
+    private Delta delta;
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public int getConfirmed() {
+        return confirmed;
+    }
+
+    public int getDeceased() {
+        return deceased;
+    }
+
+    public int getRecovered() {
+        return recovered;
+    }
+
+    public Delta getDelta() {
+        return delta;
+    }
+
+ }
 
 public class DistrictWise{
-    public String state;
-    public String statecode;
-    public List<DistrictData> districtData;
+    private String state;
+    private String statecode;
+    private List<DistrictData> districtData;
+
+    public String getState() {
+        return state;
+    }
+
+    public String getStatecode() {
+        return statecode;
+    }
+
+    public List<DistrictData> getDistrictData() {
+        return districtData;
+    }
+
 }
 

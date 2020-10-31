@@ -460,7 +460,7 @@ lblStateD.setText("Deaths");
 
         dcDate.setBackground(new java.awt.Color(255, 255, 255));
         dcDate.setToolTipText("Choose a date");
-        dcDate.setDateFormatString("yyyy-MM-dd");
+        dcDate.setDateFormatString("EEEE MMM dd, yyyy");
         dcDate.setMinSelectableDate(new java.util.Date(1583778600000L));
         dcDate.setName("dcDate"); // NOI18N
         jPanel3.add(dcDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 160, -1));
