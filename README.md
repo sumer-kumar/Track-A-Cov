@@ -1,1 +1,20 @@
 # Track-A-Cov
+Track-A-Cov is an application that shows all the statistics of the pandemic.
+
+# Description
+Specifically this application helps by displaying all the statistics of the COVID situation across the country, Features added to the applications are:-
+#### 1. Displays COVID-19 stats (state-wise, district-wise).
+#### 2. Feature to search stats for individual state, district.
+#### 3. Displays Total cases, recovered cases, etc.
+#### 4. Symptom analyser(set of questions asked to determine if you might be covid positive).
+#### 5. Added a refresh option to fetch latest stats and display date and time for last update.
+#### 6. Fetched covid related news.
+#### 7. Link to covid related websites which open in the browser (like WHO, Govt. of India, etc.)
+#### 8. Covid advisories, helpline and contact numbers added.
+#### 9. Plotted stats using graphs.
+#### 10. User can bookmark their favourite news articles locally and view later.
+
+# Badges
+![GitHub All Releases](https://img.shields.io/github/downloads/Rishab8077/Track-A-Cov/total?color=%2300ff00&logo=GitHub)
+![GitHub followers](https://img.shields.io/github/followers/Rishab8077?label=Rishab&logoColor=%2300ff00&style=social) ![GitHub followers](https://img.shields.io/github/followers/sumer-kumar?label=Sumer&logoColor=%23ff0000&style=social) ![GitHub followers](https://img.shields.io/github/followers/dkumarmanglam?label=Devanshu&logoColor=%230000ff&style=social) 
+![Twitter Follow](https://img.shields.io/twitter/follow/RishabBothra6?style=social)
