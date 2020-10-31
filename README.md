@@ -1,7 +1,9 @@
 # Track-A-Cov
+
 Track-A-Cov is an application that shows all the statistics of the pandemic.
 
 # Description
+
 Specifically this application helps by displaying all the statistics of the COVID situation across the country, Features added to the applications are:-
 #### 1. Displays COVID-19 stats (state-wise, district-wise).
 #### 2. Feature to search stats for individual state, district.
@@ -15,6 +17,19 @@ Specifically this application helps by displaying all the statistics of the COVI
 #### 10. User can bookmark their favourite news articles locally and view later.
 
 # Badges
+
 ![GitHub All Releases](https://img.shields.io/github/downloads/Rishab8077/Track-A-Cov/total?color=%2300ff00&logo=GitHub)
 ![GitHub followers](https://img.shields.io/github/followers/Rishab8077?label=Rishab&logoColor=%2300ff00&style=social) ![GitHub followers](https://img.shields.io/github/followers/sumer-kumar?label=Sumer&logoColor=%23ff0000&style=social) ![GitHub followers](https://img.shields.io/github/followers/dkumarmanglam?label=Devanshu&logoColor=%230000ff&style=social) 
 ![Twitter Follow](https://img.shields.io/twitter/follow/RishabBothra6?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/dkumar?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/sumerkumar?style=social)
+
+# Visual
+
+### Homepage
+
+![2020-10-31 (1)](https://user-images.githubusercontent.com/72625053/97775158-9e47b800-1b86-11eb-8ab1-4946f420bd18.png)
+
+### Helpline
+
+![2020-10-31 (2)](https://user-images.githubusercontent.com/72625053/97775729-1f08b300-1b8b-11eb-8bf6-6e3d912a9bc2.png)
