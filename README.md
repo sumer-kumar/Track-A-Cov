@@ -46,3 +46,16 @@ Specifically this application helps by displaying all the statistics of the COVI
 
 ![2020-10-31 (5)](https://user-images.githubusercontent.com/72625053/97776095-a1927200-1b8d-11eb-81bd-846c47b3beb5.png)
 
+# Installation
+
+1. Use the GSON library for handling JSON response.
+Download link: http://www.java2s.com/Code/JarDownload/gson/gson-2.2.2.jar.zip
+2. Use the jfreechart for plotting the graph.
+Download link: https://sourceforge.net/projects/jfreechart/files/latest/download
+
+# Contributing 
+
+Pull request are welcome. For major changes first please discuss what changes you want to make. Current contributions in the project:- Sumeer, Rishab & Devanshu
+
+# License
+
