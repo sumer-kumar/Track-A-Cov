@@ -13,6 +13,7 @@ public class DistrictJframe extends javax.swing.JFrame {
         initComponents();
         this.dataFetch = dataFetch;
         model = (DefaultTableModel)tblDistrict.getModel();
+        
     }
     public void setState(String state){
         this.state = state;

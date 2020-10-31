@@ -16,14 +16,32 @@ public class HomePage extends javax.swing.JFrame {
    private DefaultTableModel model;
    private NewsJframe newsJframe;
    private boolean internet;
-   private Bookmark bookmark;
+   private BookmarkJframe bookmark;
    private GraphJframe graph;
+   private Analyser analyser;
+   private LinksJframe links;
+   private HelplineJframe helpline;
    
     public HomePage() {
         initComponents();
         dataFetch = new DataFetch();
         time();
         new Thread(){
+            @Override
+            public void run(){
+                btnHelpline.setEnabled(false);
+                try{
+                    dataFetch.refreshContacts();
+                    dataFetch.refreshAdvisories();
+                }catch(Exception e){}
+                dataFetch.fetchContacts();
+                dataFetch.fetchAdvisories();
+                helpline = new HelplineJframe(dataFetch);
+                btnHelpline.setEnabled(true);
+            } 
+        }.start();
+        new Thread(){
+            @Override
             public void run(){
                btnGraph.setEnabled(false);
                try{
@@ -34,6 +52,18 @@ public class HomePage extends javax.swing.JFrame {
                btnGraph.setEnabled(true);
             }
         }.start();
+        new Thread(){
+            @Override
+            public void run(){
+                btnAnalyser.setEnabled(false);
+                btnLinks.setEnabled(false);
+                
+                analyser = new Analyser();
+                links = new LinksJframe();
+                btnAnalyser.setEnabled(true);
+                btnLinks.setEnabled(true);
+            }
+        }.start();
             new Thread(){
             public void run(){
             btnNews.setEnabled(false);
@@ -41,7 +71,7 @@ public class HomePage extends javax.swing.JFrame {
             btnNews.setEnabled(true);    
             }
         }.start();
-        bookmark = new Bookmark();
+        bookmark = new BookmarkJframe();
        try {
            new Thread(){
                public void run(){
@@ -163,11 +193,11 @@ lblStateD.setText("Deaths");
         jPanel3 = new javax.swing.JPanel();
         btnRefresh = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        btnAnakyser = new javax.swing.JButton();
+        btnAnalyser = new javax.swing.JButton();
         btnLinks = new javax.swing.JButton();
         btnNews = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnHelpline = new javax.swing.JButton();
         bntBookmark = new javax.swing.JButton();
         btnGraph = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -200,7 +230,6 @@ lblStateD.setText("Deaths");
         lblHome.setBackground(new java.awt.Color(33, 32, 54));
         lblHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblDate.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblDate.setForeground(new java.awt.Color(220, 248, 252));
         lblDate.setText("Date/Time");
         lblHome.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 170, 30));
@@ -210,7 +239,7 @@ lblStateD.setText("Deaths");
 
         jLabel1.setBackground(new java.awt.Color(33, 32, 54));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TOTAL");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -234,7 +263,7 @@ lblStateD.setText("Deaths");
 
         jLabel4.setBackground(new java.awt.Color(33, 32, 54));
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("DEATHS");
         jLabel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -261,7 +290,7 @@ lblStateD.setText("Deaths");
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lblTotal.setForeground(new java.awt.Color(153, 153, 153));
+        lblTotal.setForeground(new java.awt.Color(255, 0, 0));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotal.setText("0");
         jPanel2.add(lblTotal);
@@ -279,7 +308,7 @@ lblStateD.setText("Deaths");
         jPanel2.add(lblRecovered);
 
         lblDeaths.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lblDeaths.setForeground(new java.awt.Color(255, 0, 0));
+        lblDeaths.setForeground(new java.awt.Color(153, 153, 153));
         lblDeaths.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDeaths.setText("0");
         jPanel2.add(lblDeaths);
@@ -308,13 +337,13 @@ lblStateD.setText("Deaths");
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
-        btnAnakyser.setText("Covid Analyzer");
-        btnAnakyser.addActionListener(new java.awt.event.ActionListener() {
+        btnAnalyser.setText("Covid Analyzer");
+        btnAnalyser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnakyserActionPerformed(evt);
+                btnAnalyserActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAnakyser);
+        jPanel4.add(btnAnalyser);
 
         btnLinks.setText("Important Links");
         btnLinks.addActionListener(new java.awt.event.ActionListener() {
@@ -336,8 +365,13 @@ lblStateD.setText("Deaths");
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton2.setText("Helpline ");
-        jPanel8.add(jButton2);
+        btnHelpline.setText("Helpline ");
+        btnHelpline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHelplineActionPerformed(evt);
+            }
+        });
+        jPanel8.add(btnHelpline);
 
         bntBookmark.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bntBookmark.setText("Bookmarked News");
@@ -441,7 +475,7 @@ lblStateD.setText("Deaths");
         jPanel6.setBackground(new java.awt.Color(33, 32, 54));
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
-        lblStateTC.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateTC.setForeground(new java.awt.Color(255, 0, 0));
         lblStateTC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateTC.setText(" ");
         jPanel6.add(lblStateTC);
@@ -456,7 +490,7 @@ lblStateD.setText("Deaths");
         lblStateRC.setText(" ");
         jPanel6.add(lblStateRC);
 
-        lblStateDC.setForeground(new java.awt.Color(255, 0, 0));
+        lblStateDC.setForeground(new java.awt.Color(153, 153, 153));
         lblStateDC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateDC.setText(" ");
         jPanel6.add(lblStateDC);
@@ -467,7 +501,7 @@ lblStateD.setText("Deaths");
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         lblStateT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblStateT.setForeground(new java.awt.Color(153, 153, 153));
+        lblStateT.setForeground(new java.awt.Color(255, 0, 0));
         lblStateT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateT.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel7.add(lblStateT);
@@ -485,7 +519,7 @@ lblStateD.setText("Deaths");
         jPanel7.add(lblStateR);
 
         lblStateD.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblStateD.setForeground(new java.awt.Color(255, 0, 0));
+        lblStateD.setForeground(new java.awt.Color(153, 153, 153));
         lblStateD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStateD.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel7.add(lblStateD);
@@ -498,14 +532,12 @@ lblStateD.setText("Deaths");
         lblState.setText(" ");
         jPanel5.add(lblState, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 310, 40));
 
-        lblLastRefreshed.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblLastRefreshed.setForeground(new java.awt.Color(220, 248, 252));
         jPanel5.add(lblLastRefreshed, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 140, 30));
         lblLastRefreshed.getAccessibleContext().setAccessibleParent(jPanel5);
 
-        lblLastUpdated.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblLastUpdated.setForeground(new java.awt.Color(220, 248, 252));
-        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 90, 30));
+        jPanel5.add(lblLastUpdated, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 90, 30));
         lblLastUpdated.getAccessibleContext().setAccessibleParent(jPanel5);
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 530, 450));
@@ -549,7 +581,7 @@ lblStateD.setText("Deaths");
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void none(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_none
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_none
 
     private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
@@ -612,26 +644,30 @@ lblStateD.setText("Deaths");
         graph.setVisible(true);
     }//GEN-LAST:event_btnGraphActionPerformed
 
+    private void btnHelplineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelplineActionPerformed
+       helpline.setVisible(true);
+    }//GEN-LAST:event_btnHelplineActionPerformed
+
     private void btnLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinksActionPerformed
-       LinksJframe lf = new LinksJframe();
-       lf.setVisible(true);
+      links.setVisible(true);
     }//GEN-LAST:event_btnLinksActionPerformed
 
-    private void btnAnakyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnakyserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnakyserActionPerformed
-        
+    private void btnAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyserActionPerformed
+      analyser.setVisible(true);
+    }//GEN-LAST:event_btnAnalyserActionPerformed
+
+       
 
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntBookmark;
-    private javax.swing.JButton btnAnakyser;
+    private javax.swing.JButton btnAnalyser;
     private javax.swing.JButton btnDistrict;
     private javax.swing.JButton btnGraph;
+    private javax.swing.JButton btnHelpline;
     private javax.swing.JButton btnLinks;
     private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
