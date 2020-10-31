@@ -203,14 +203,15 @@ public class DistrictJframe extends javax.swing.JFrame {
 showLabels();        // TODO add your handling code here:
     }//GEN-LAST:event_tblDistrictKeyPressed
   public void showInTable(){
+      this.setTitle(state);
    Object [] rowData = new Object[5];
    DistrictWise [] dw = dataFetch.getDistrictWiseObj();
   for(position=0;position<dw.length;position++ ){
-      if(this.state.equalsIgnoreCase(dw[position].state))
+      if(this.state.equalsIgnoreCase(dw[position].getState()))
           break;
   }
   
-  for(int j=0;j<dw[position].districtData.size();j++){
+  for(int j=0;j<dw[position].getDistrictData().size();j++){
      rowData[0]= dw[position].districtData.get(j).district;
      rowData[1]= dw[position].districtData.get(j).confirmed;
      rowData[2]= dw[position].districtData.get(j).active;

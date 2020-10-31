@@ -1,6 +1,9 @@
 
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +27,7 @@ public class HomePage extends javax.swing.JFrame {
    
     public HomePage() {
         initComponents();
+        dateChooseInitials();
         dataFetch = new DataFetch();
         time();
         new Thread(){
@@ -39,18 +43,6 @@ public class HomePage extends javax.swing.JFrame {
                 helpline = new HelplineJframe(dataFetch);
                 btnHelpline.setEnabled(true);
             } 
-        }.start();
-        new Thread(){
-            @Override
-            public void run(){
-               btnGraph.setEnabled(false);
-               try{
-               dataFetch.refreshHistory();
-               }catch(Exception e){System.out.println(e.getMessage());}
-               dataFetch.fetchHistory();
-               graph = new GraphJframe(dataFetch);
-               btnGraph.setEnabled(true);
-            }
         }.start();
         new Thread(){
             @Override
@@ -81,11 +73,13 @@ public class HomePage extends javax.swing.JFrame {
                    } catch (Exception ex) {
                        System.out.println(ex.getMessage());
                    }
-                   dataFetch.fetchDataDistrict();                                                      
+                   dataFetch.fetchDataDistrict();    
+                   df = new DistrictJframe(dataFetch);
                   btnDistrict.setEnabled(true);
                }
            }.start();
-           dataFetch.refresh();
+           btnGraph.setEnabled(false);
+           dataFetch.refreshHistory();
            lblLastRefreshed.setText(formatDateTime );
            lblLastUpdated.setText("Last Updated:");
            internet = true;
@@ -95,15 +89,14 @@ public class HomePage extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
        }
-       dataFetch.fetchData();
-       displayIndiaData();
-       this.setVisible(true);
-       
+               dataFetch.fetchHistory();
+               graph = new GraphJframe(dataFetch);
+               btnGraph.setEnabled(true);               
+       this.setVisible(true);      
        model = (DefaultTableModel)tblStateWise.getModel();
-       showInTable();
-       df = new DistrictJframe(dataFetch);
-       
-       
+       dcDate.setDate(new Date());
+       showCurrStats();
+       autoRefresh();      
    }
     public void time(){
         
@@ -127,38 +120,6 @@ public class HomePage extends javax.swing.JFrame {
         };
         t.start();
     }
-    public void displayIndiaData(){
-        lblTotal.setText(""+dataFetch.getStateWise().data.summary.total);
-        
-        lblActive.setText(""+(dataFetch.getStateWise().data.summary.total-dataFetch.getStateWise().data.summary.deaths
-                -dataFetch.getStateWise().data.summary.discharged));
-        
-        lblRecovered.setText(""+dataFetch.getStateWise().data.summary.discharged);
-        
-        lblDeaths.setText(""+dataFetch.getStateWise().data.summary.deaths);
-        
-        }
-    public void showInTable(){
-       Object[] rowData = new Object[6];
-       
-       for(int i=0;i<dataFetch.getStateWise().data.regional.size();i++){
-          rowData[0] = dataFetch.getStateWise().data.regional.get(i).loc.toUpperCase();
-          rowData[1] = dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian;
-          
-          rowData[2]=    (dataFetch.getStateWise().data.regional.get(i).confirmedCasesIndian
-                         -dataFetch.getStateWise().data.regional.get(i).discharged
-                         -dataFetch.getStateWise().data.regional.get(i).deaths);
-          rowData[3] =   dataFetch.getStateWise().data.regional.get(i).discharged;
-          rowData[4] =  dataFetch.getStateWise().data.regional.get(i).deaths;
-
-          model.addRow(rowData);
-       }
-       tblStateWise.getColumnModel().getColumn(0).setPreferredWidth(100);
-       tblStateWise.getColumnModel().getColumn(1).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(2).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
-       tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
-    }
     public void showLabels(){
 lblState.setText((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
 lblStateTC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),1));
@@ -170,8 +131,111 @@ lblStateT.setText("Total");
 lblStateR.setText("Recovered");
 lblStateD.setText("Deaths");
 
-    }  
- 
+    }
+    private void dateChooseInitials(){
+        
+    JTextFieldDateEditor dtEditor = (JTextFieldDateEditor)dcDate.getDateEditor();
+    dtEditor.setEditable(false);
+    dcDate.setMaxSelectableDate(new Date());
+    }
+    private String getSelectedDate(){
+    SimpleDateFormat dtFormate = new SimpleDateFormat("yyyy-MM-dd");
+    String selectedDate="";
+    try {
+         selectedDate = dtFormate.format(dcDate.getDate());
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    return selectedDate;
+    }
+    private int indexOfDate(){
+        int index = 0;
+        String date = getSelectedDate();
+        for(int i=0;i<dataFetch.getHistory().getData().size();i++)
+        {
+            if(date.equals(dataFetch.getHistory().getData().get(i).getDay())){
+                index =i;
+                break;
+            }
+        }
+        
+        return index;
+    }
+    public void showInTable(int index){
+        model.setRowCount(0);
+       Object[] rowData = new Object[6];
+       for(int i=0;i<dataFetch.getHistory().getData().get(index).getRegional().size();i++){
+          rowData[0] = dataFetch.getHistory().getData().get(index).getRegional().get(i).getLoc().toUpperCase();
+          rowData[1] = dataFetch.getHistory().getData().get(index).getRegional().get(i).getConfirmedCasesIndian();
+          
+          rowData[2]=    (dataFetch.getHistory().getData().get(index).getRegional().get(i).getConfirmedCasesIndian()
+                         -dataFetch.getHistory().getData().get(index).getRegional().get(i).getDischarged()
+                         -dataFetch.getHistory().getData().get(index).getRegional().get(i).getDeaths());
+          rowData[3] =   dataFetch.getHistory().getData().get(index).getRegional().get(i).getDischarged();
+          rowData[4] =  dataFetch.getHistory().getData().get(index).getRegional().get(i).getDeaths();
+          model.addRow(rowData);
+       }
+       tblStateWise.getColumnModel().getColumn(0).setPreferredWidth(100);
+       tblStateWise.getColumnModel().getColumn(1).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(2).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(3).setPreferredWidth(3);
+       tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
+    }
+    public void displayIndiaData(int index){
+        lblTotal.setText(""+dataFetch.getHistory().getData().get(index).getSummary().getConfirmedCasesIndian());
+        
+        lblActive.setText(""+(dataFetch.getHistory().getData().get(index).getSummary().getConfirmedCasesIndian()
+                -dataFetch.getHistory().getData().get(index).getSummary().getDeaths()
+                -dataFetch.getHistory().getData().get(index).getSummary().getDischarged()));
+        
+        lblRecovered.setText(""+dataFetch.getHistory().getData().get(index).getSummary().getDischarged());
+        
+        lblDeaths.setText(""+dataFetch.getHistory().getData().get(index).getSummary().getDeaths());
+        
+        }
+    public void showCurrStats(){
+        int todayIndex = dataFetch.getHistory().getData().size()-1;
+        showInTable(todayIndex);
+        displayIndiaData(todayIndex);
+    }
+    public void refresh(){
+        try {
+            new Thread(){
+               public void run(){
+                   btnDistrict.setEnabled(false);
+                   try {
+                    dataFetch.refreshDistrict();
+                    dataFetch.fetchDataDistrict();
+                   } catch (Exception ex) {
+                       System.out.println(ex.getMessage());
+                   }
+                  btnDistrict.setEnabled(true);
+               }
+           }.start();
+           btnGraph.setEnabled(false);
+           dataFetch.refreshHistory();
+           dataFetch.fetchHistory();
+           lblLastRefreshed.setText(formatDateTime );
+           lblLastUpdated.setText("Last Updated:");
+           lblLastRefreshed.setText(formatDateTime );
+           lblLastUpdated.setText("Last Updated:");
+           btnGraph.setEnabled(true);
+       } catch (Exception ex) {
+        this.setVisible(true);
+        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
+                +"Connect to Internet to See Latest Data");
+       }
+       dcDate.setDate(new Date());
+    }
+    public void autoRefresh(){
+        new Thread(){
+            public void run(){
+                try{Thread.sleep(1000*60*5);}catch(Exception e){}
+                refresh();
+            }
+        }.start();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -200,6 +264,8 @@ lblStateD.setText("Deaths");
         btnHelpline = new javax.swing.JButton();
         bntBookmark = new javax.swing.JButton();
         btnGraph = new javax.swing.JButton();
+        dcDate = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStateWise = new javax.swing.JTable();
@@ -392,6 +458,21 @@ lblStateD.setText("Deaths");
 
         jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 40));
 
+        dcDate.setBackground(new java.awt.Color(255, 255, 255));
+        dcDate.setToolTipText("Choose a date");
+        dcDate.setDateFormatString("yyyy-MM-dd");
+        dcDate.setMinSelectableDate(new java.util.Date(1583778600000L));
+        dcDate.setName("dcDate"); // NOI18N
+        jPanel3.add(dcDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 160, -1));
+
+        jButton1.setText("Go");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, -1, -1));
+
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 370, 270));
 
         jPanel5.setBackground(new java.awt.Color(33, 32, 54));
@@ -547,31 +628,8 @@ lblStateD.setText("Deaths");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-      try {
-            new Thread(){
-               public void run(){
-                   btnDistrict.setEnabled(false);
-                   try {
-                    dataFetch.refreshDistrict();
-                    dataFetch.fetchDataDistrict();
-                   } catch (Exception ex) {
-                       System.out.println(ex.getMessage());
-                   }
-                  btnDistrict.setEnabled(true);
-               }
-           }.start();
-           dataFetch.refresh();
-           lblLastRefreshed.setText(formatDateTime );
-           lblLastUpdated.setText("Last Updated:");
-           
-       } catch (Exception ex) {
-        this.setVisible(true);
-        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
-                +"Connect to Internet to See Latest Data");
-       }
-        
-       dataFetch.fetchData();
-       displayIndiaData();
+      refresh();
+
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
@@ -656,6 +714,12 @@ lblStateD.setText("Deaths");
       analyser.setVisible(true);
     }//GEN-LAST:event_btnAnalyserActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int i =indexOfDate();
+        showInTable(i);
+        displayIndiaData(i);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
        
 
      
@@ -668,6 +732,8 @@ lblStateD.setText("Deaths");
     private javax.swing.JButton btnLinks;
     private javax.swing.JButton btnNews;
     private javax.swing.JButton btnRefresh;
+    private com.toedter.calendar.JDateChooser dcDate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
