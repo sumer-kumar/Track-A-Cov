@@ -57,5 +57,4 @@ Download link: https://sourceforge.net/projects/jfreechart/files/latest/download
 
 Pull request are welcome. For major changes first please discuss what changes you want to make. Current contributions in the project:- Sumeer, Rishab & Devanshu
 
-# License
 
