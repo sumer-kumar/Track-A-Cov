@@ -15,9 +15,10 @@ public class NewsJframe extends javax.swing.JFrame {
     private News news;
     private int currIndex;
     private int size;
-    private File dir;
-    private boolean repeate;
+    private File dir; //news directory
+    private boolean repeate; //use to stop multiple opening of this window
     private String currUrl;
+    //this constructor used to show saved news
     public NewsJframe(Saved saved){
         initComponents();
         taTitle.setText(saved.getTitle());
@@ -25,28 +26,31 @@ public class NewsJframe extends javax.swing.JFrame {
         taBody.setText(saved.getBody());
         lblSource.setText(saved.getSource());
         currUrl = saved.getUrl();
+      //hiding the next,prev and save button   
         btnNext.setVisible(false);
         btnPrev.setVisible(false);
         btnSave.setVisible(false);
         
     }
+    
+    //constructor used to show latest news on covid 19
     public NewsJframe() {
        this.repeate = false;
        initComponents();
        try{
            fetch();
        showLabels(0);
-       currIndex = 0;
-       size = news.getSize()-1;
+       currIndex = 0; // for shows first news
+       size = news.getSize()-1; 
        dir = new File("news");
-       dir.mkdir();
+       dir.mkdir(); //create news folder if not existed
        pnlHeader.grabFocus();
        }catch(Exception e){}
     }
     public boolean getRepeate(){return this.repeate;}
     public void fetch(){
     HttpRequest request = HttpRequest.newBuilder()
-   .uri(URI.create("https://rapidapi.p.rapidapi.com/api/search/NewsSearchAPI?pageSize=10&q=covid%2019%20india&autoCorrect=true&pageNumber=1&safeSearch=true&toPublishedDate=null&fromPublishedDate=null&withThumbnails=false"))
+   .uri(URI.create("https://rapidapi.p.rapidapi.com/api/search/NewsSearchAPI?pageSize=20&q=covid%2019%20india&autoCorrect=true&pageNumber=1&safeSearch=true&toPublishedDate=null&fromPublishedDate=null&withThumbnails=false"))
    .header("x-rapidapi-host", "contextualwebsearch-websearch-v1.p.rapidapi.com")
    .header("x-rapidapi-key", "ef6da0019fmsh0fac709bb3488aap16ebf0jsn9d3c7742a884")
    .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -65,13 +69,16 @@ public class NewsJframe extends javax.swing.JFrame {
 
     }
     public void showLabels(int i){
+ 
         taTitle.setText(news.getValue(i).getTitle());
         taDescription.setText(news.getValue(i).getDescription());
         taBody.setText(news.getValue(i).getBody());
         lblSource.setText(news.getValue(i).getProvider().getName());
         currUrl = news.getValue(i).getUrl();
+        
     }
     public void next(){
+        
         if(currIndex!=size&&(currIndex>=0&&currIndex<=size)){
             currIndex++;
             showLabels(currIndex);
@@ -93,6 +100,7 @@ public class NewsJframe extends javax.swing.JFrame {
     }
     public void saveNews(){
         String s ="";
+        
         File f = new File(dir,news.getValue(currIndex).getTitle().replaceAll(":","")+".txt");
         try{
            if(!f.exists()){
@@ -110,7 +118,7 @@ public class NewsJframe extends javax.swing.JFrame {
         }
         else 
         {
-            JOptionPane.showMessageDialog(this,"Already Saved");
+            JOptionPane.showMessageDialog(this,"Already Saved"); // shows if saving news is already saved
         }
         }catch(Exception e){System.out.println(e.getMessage());}
 
