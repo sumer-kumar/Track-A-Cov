@@ -239,7 +239,9 @@ lblStateD.setText("Deaths");
        dcDate.setDate(new Date());
     }
     public void refresh(){
-        try {
+        new Thread(){
+            public void run(){
+          try {
             new Thread(){
                public void run(){
                    btnDistrict.setEnabled(false);
@@ -261,11 +263,14 @@ lblStateD.setText("Deaths");
            lblLastUpdated.setText("Last Updated:");
            btnGraph.setEnabled(true);
        } catch (Exception ex) {
-        this.setVisible(true);
-        JOptionPane.showMessageDialog(this,"No Internet Connection\n"
+        HomePage.this.setVisible(true);
+        JOptionPane.showMessageDialog(HomePage.this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
        }
-    }
+      
+            }
+        }.start();
+            }
     public void autoRefresh(){ //refresh every 5 min
         
         new Thread(){

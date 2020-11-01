@@ -141,7 +141,8 @@ public class Analyser extends javax.swing.JFrame {
                 UI.put("Panel.background", Color.red);
             }
             JOptionPane.showMessageDialog(this, message);
-            
+             UI.put("OptionPane.background", Color.white);
+                UI.put("Panel.background", Color.white);
             new closer(this);
         }
     }//GEN-LAST:event_btnResultsActionPerformed
