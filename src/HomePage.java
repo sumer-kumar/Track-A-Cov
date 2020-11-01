@@ -111,8 +111,7 @@ public class HomePage extends javax.swing.JFrame {
                this.setVisible(true);
        //for StateWise table        
        model = (DefaultTableModel)tblStateWise.getModel();
-       //this will shows initially todays date in jdatechoser
-       dcDate.setDate(new Date());
+
        //shows current stats
        showCurrStats();
        //this will refresh every 5 mins
@@ -235,6 +234,9 @@ lblStateD.setText("Deaths");
         showInTable(todayIndex);
         
         displayIndiaData(todayIndex);
+        
+       //this will shows initially todays date in jdatechoser
+       dcDate.setDate(new Date());
     }
     public void refresh(){
         try {
@@ -263,9 +265,9 @@ lblStateD.setText("Deaths");
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
                 +"Connect to Internet to See Latest Data");
        }
-       dcDate.setDate(new Date());
     }
-    public void autoRefresh(){
+    public void autoRefresh(){ //refresh every 5 min
+        
         new Thread(){
             public void run(){
                 try{Thread.sleep(1000*60*5);}catch(Exception e){} //sleeps for 5 mins
@@ -668,6 +670,7 @@ lblStateD.setText("Deaths");
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
       
         refresh();
+        showCurrStats();
 
     }//GEN-LAST:event_btnRefreshActionPerformed
 
