@@ -14,7 +14,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 
 public class GraphJframe extends javax.swing.JFrame {
+    
     private DataFetch dataFetch;
+    
     public GraphJframe(DataFetch dataFetch) {
         initComponents();
         this.dataFetch = dataFetch;
@@ -24,6 +26,7 @@ public class GraphJframe extends javax.swing.JFrame {
         LineChartIndiaDeaths();
         LineChartIndiaCombined();
     }
+    
     public void LineChartIndiaTotal(){
         DefaultCategoryDataset total = new DefaultCategoryDataset();
         int size = dataFetch.getHistory().getData().size();

@@ -29,14 +29,19 @@ public class BookmarkJframe extends javax.swing.JFrame {
     
     public void showInTable(){
         dir.mkdir();
-        list = new LinkedList<File>();
+
+        list = new LinkedList<File>(); //returns the array of files in directory news
+        
         for(int i=0;i<dir.listFiles().length;i++){list.add(dir.listFiles()[i]);}
+        
         Object [] rowData = new Object [1];
+        
         for(int i=0;i<list.size();i++){
             rowData[0] = list.get(i).getName().replaceAll(".txt","");
             model.addRow(rowData);
         }
     }
+
     public void seeNews(){
         if(tblList.getSelectedRow()!=-1){
             try {

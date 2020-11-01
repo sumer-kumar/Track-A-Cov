@@ -12,8 +12,8 @@ import javax.swing.table.TableRowSorter;
 
 
 public class HomePage extends javax.swing.JFrame {
-   private DataFetch dataFetch;
-   private LocalDateTime dateTime;
+   private DataFetch dataFetch; //
+   private LocalDateTime dateTime; 
    private String formatDateTime; 
    private DistrictJframe df;
    private DefaultTableModel model;
@@ -24,13 +24,15 @@ public class HomePage extends javax.swing.JFrame {
    private Analyser analyser;
    private LinksJframe links;
    private HelplineJframe helpline;
-   
+   //constructor
     public HomePage() {
         initComponents();
+        
+        //
         dateChooseInitials();
         dataFetch = new DataFetch();
-        time();
-        new Thread(){
+        time(); //for current time
+        new Thread(){ //a thread to fetch data for helpline feature
             @Override
             public void run(){
                 btnHelpline.setEnabled(false);
@@ -43,7 +45,8 @@ public class HomePage extends javax.swing.JFrame {
                 helpline = new HelplineJframe(dataFetch);
                 btnHelpline.setEnabled(true);
             } 
-        }.start();
+        }.start();// ******ending of thread
+        //a thread to create objects of LinksJframe and analyser 
         new Thread(){
             @Override
             public void run(){
@@ -52,75 +55,96 @@ public class HomePage extends javax.swing.JFrame {
                 
                 analyser = new Analyser();
                 links = new LinksJframe();
+                
                 btnAnalyser.setEnabled(true);
                 btnLinks.setEnabled(true);
             }
-        }.start();
-            new Thread(){
+        }.start();//*******end of thread
+        //thread for making newJframe objects 
+        //the data for news is fetched inside constructor of NewJframe
+        new Thread(){
             public void run(){
             btnNews.setEnabled(false);
+            
             newsJframe = new NewsJframe();
+            
             btnNews.setEnabled(true);    
             }
-        }.start();
+        }.start();//********end of thread
+       
         bookmark = new BookmarkJframe();
-       try {
+       
+        try {
+            //to refresh district
            new Thread(){
                public void run(){
                    btnDistrict.setEnabled(false);
                    try {
-                       dataFetch.refreshDistrict();                       
+                       dataFetch.refreshDistrict(); //for making data offline                       
                    } catch (Exception ex) {
                        System.out.println(ex.getMessage());
                    }
-                   dataFetch.fetchDataDistrict();    
+                   dataFetch.fetchDataDistrict();  //for taking data inside objects
                    df = new DistrictJframe(dataFetch);
                   btnDistrict.setEnabled(true);
                }
-           }.start();
+           }.start();//*********end of thread
+           
            btnGraph.setEnabled(false);
+           
            dataFetch.refreshHistory();
+           
            lblLastRefreshed.setText(formatDateTime );
            lblLastUpdated.setText("Last Updated:");
-           internet = true;
+           
+           internet = true; //if internet is available
        } catch (Exception ex) {
-           this.setVisible(true);
-           internet = false;
+           this.setVisible(true); //if internet is not available this will open window of HomePage
+           internet = false; //if interenet is not available
         JOptionPane.showMessageDialog(this,"No Internet Connection\n"
-                +"Connect to Internet to See Latest Data");
-       }
-               dataFetch.fetchHistory();
-               graph = new GraphJframe(dataFetch);
-               btnGraph.setEnabled(true);               
-       this.setVisible(true);      
+                +"Connect to Internet to See Latest Data");//message
+       }        
+               //for taking data into objects from offline file
+       dataFetch.fetchHistory();
+       graph = new GraphJframe(dataFetch); // for making graph
+       btnGraph.setEnabled(true);                
+               this.setVisible(true);
+       //for StateWise table        
        model = (DefaultTableModel)tblStateWise.getModel();
+       //this will shows initially todays date in jdatechoser
        dcDate.setDate(new Date());
+       //shows current stats
        showCurrStats();
+       //this will refresh every 5 mins
        autoRefresh();      
    }
     public void time(){
-        
         Thread t = new Thread(){
             public void run(){
                 String am_pm;
                 int hr ;
                 while(true)
                 { 
-                    dateTime = LocalDateTime.now(); 
+                    dateTime = LocalDateTime.now();
+                    
                     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");  
+                    
                     formatDateTime = dateTime.format(format);
+                    
                     lblDate.setText(formatDateTime);
+                    
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1000); // sleep for 1 sec
                     } catch (Exception e) {
                         e.getStackTrace();
                     }
                 } 
             }
         };
-        t.start();
+        t.start();//****end of thread
     }
-    public void showLabels(){
+    public void showLabels(){//this function highlights the stats of state 
+        
 lblState.setText((String)model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),0));
 lblStateTC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),1));
 lblStateAC.setText(""+model.getValueAt(tblStateWise.convertRowIndexToModel(tblStateWise.getSelectedRow()),2));
@@ -135,22 +159,30 @@ lblStateD.setText("Deaths");
     private void dateChooseInitials(){
         
     JTextFieldDateEditor dtEditor = (JTextFieldDateEditor)dcDate.getDateEditor();
-    dtEditor.setEditable(false);
+    dtEditor.setEditable(false); // for not editable 
     dcDate.setMaxSelectableDate(new Date());
     }
-    private String getSelectedDate(){
+    private String getSelectedDate(){ // selected date converted and returned into yyyy-MM-dd formate
+  
     SimpleDateFormat dtFormate = new SimpleDateFormat("yyyy-MM-dd");
+    
     String selectedDate="";
+    
     try {
          selectedDate = dtFormate.format(dcDate.getDate());
         } catch (Exception e) {
             e.getStackTrace();
         }
+    
     return selectedDate;
+    
     }
     private int indexOfDate(){
+        //returns the index of chosen date matched with api
         int index = 0;
+        
         String date = getSelectedDate();
+        
         for(int i=0;i<dataFetch.getHistory().getData().size();i++)
         {
             if(date.equals(dataFetch.getHistory().getData().get(i).getDay())){
@@ -163,7 +195,9 @@ lblStateD.setText("Deaths");
     }
     public void showInTable(int index){
         model.setRowCount(0);
-       Object[] rowData = new Object[6];
+        
+       Object[] rowData = new Object[6]; //this object array stores into statewise tabel
+       
        for(int i=0;i<dataFetch.getHistory().getData().get(index).getRegional().size();i++){
           rowData[0] = dataFetch.getHistory().getData().get(index).getRegional().get(i).getLoc().toUpperCase();
           rowData[1] = dataFetch.getHistory().getData().get(index).getRegional().get(i).getConfirmedCasesIndian();
@@ -182,6 +216,7 @@ lblStateD.setText("Deaths");
        tblStateWise.getColumnModel().getColumn(4).setPreferredWidth(3);
     }
     public void displayIndiaData(int index){
+        //shows the stats of selected date of india
         lblTotal.setText(""+dataFetch.getHistory().getData().get(index).getSummary().getConfirmedCasesIndian());
         
         lblActive.setText(""+(dataFetch.getHistory().getData().get(index).getSummary().getConfirmedCasesIndian()
@@ -194,8 +229,11 @@ lblStateD.setText("Deaths");
         
         }
     public void showCurrStats(){
+        //shows the stats of today  
         int todayIndex = dataFetch.getHistory().getData().size()-1;
+        
         showInTable(todayIndex);
+        
         displayIndiaData(todayIndex);
     }
     public void refresh(){
@@ -230,7 +268,7 @@ lblStateD.setText("Deaths");
     public void autoRefresh(){
         new Thread(){
             public void run(){
-                try{Thread.sleep(1000*60*5);}catch(Exception e){}
+                try{Thread.sleep(1000*60*5);}catch(Exception e){} //sleeps for 5 mins
                 refresh();
             }
         }.start();
@@ -628,13 +666,15 @@ lblStateD.setText("Deaths");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-      refresh();
+      
+        refresh();
 
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-            jPanel3.grabFocus();
-            tblStateWise.clearSelection();
+        
+        jPanel3.grabFocus();
+        tblStateWise.clearSelection();
               
     }//GEN-LAST:event_jPanel3MouseClicked
 

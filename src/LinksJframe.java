@@ -6,7 +6,7 @@ public class LinksJframe extends javax.swing.JFrame {
 
     public LinksJframe() {
         initComponents();
-        jPanel3.grabFocus();
+        jPanel3.grabFocus(); 
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -209,6 +209,7 @@ openBrowser("https://www.msdmanuals.com/home/infections/respiratory-viruses/coro
     }//GEN-LAST:event_jButton4MouseEntered
     
     public void openBrowser(String url){
+        //opens the link in default browser
         Desktop d = Desktop.getDesktop();
         try {
             d.browse(new URI(url));

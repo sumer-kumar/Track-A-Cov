@@ -8,10 +8,11 @@ import javax.swing.table.TableRowSorter;
 public class DistrictJframe extends javax.swing.JFrame {
    private DefaultTableModel model;
    private DataFetch dataFetch;
-   private String state;
-   private boolean repeate;
+   private String state; //name of selected state
+   private boolean repeate; 
    private int position;
-    public DistrictJframe(DataFetch dataFetch) {
+   
+   public DistrictJframe(DataFetch dataFetch) {
         initComponents();
         this.dataFetch = dataFetch;
         model = (DefaultTableModel)tblDistrict.getModel();
@@ -187,9 +188,10 @@ public class DistrictJframe extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-          repeate = false;    
-          model.setRowCount(0);
-           lblTotal.setText("");
+   //clears the table and the highlighting labels
+   repeate = false;    
+   model.setRowCount(0);
+   lblTotal.setText("");
    lblRecovered.setText("");
    lblActive.setText("");
    lblDeaths.setText("");
@@ -214,7 +216,8 @@ showLabels();        // TODO add your handling code here:
     }//GEN-LAST:event_tblDistrictKeyPressed
 
     private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
-       String search = tfSearch.getText().toUpperCase();
+      //searching of district
+        String search = tfSearch.getText().toUpperCase();
         TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
         tblDistrict.setRowSorter(ts);
         ts.setRowFilter(RowFilter.regexFilter(search));
